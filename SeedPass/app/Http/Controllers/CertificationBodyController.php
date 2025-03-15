@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\CertificationBody;
 use App\Http\Requests\StoreCertificationBodyRequest;
 use App\Http\Requests\UpdateCertificationBodyRequest;
+use Illuminate\Support\Facades\Hash;
+use function Laravel\Prompts\password;
 
 class CertificationBodyController extends Controller
 {
@@ -49,7 +52,9 @@ class CertificationBodyController extends Controller
         if (!$certificationBody) {
             return response()->json(['message' => 'Certification Body not found'], 404);
         }
-        $certificationBody->update($request->validated());
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        $certificationBody->update($data);
         return response()->json(['message'=>'Cet organisme est modifié avec succès '], 200);
     }
 
@@ -77,6 +82,7 @@ class CertificationBodyController extends Controller
             'certification_body' => Auth::guard('certification_body')->user()
         ]);
     }
+
 
     //fonction pour se deconnecter
 
