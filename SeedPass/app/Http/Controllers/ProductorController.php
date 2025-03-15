@@ -100,4 +100,9 @@ class ProductorController extends Controller
            return response()->json($e);
        }
     }
+
+    public function login(Request $request){
+
+        dd('ok');
+    }
 }

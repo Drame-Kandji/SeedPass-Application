@@ -27,4 +27,10 @@ class SeedLot extends Model
     public function certification_body(){
         return $this->belongsTo(CertificationBody::class);
     }
+
+    public function productor()
+    {
+        return $this->belongsTo(Productor::class);
+    }
+
 }

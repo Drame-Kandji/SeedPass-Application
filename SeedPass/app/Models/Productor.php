@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SeedLot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,4 +22,11 @@ class Productor extends Model
         'isAcceptedCondition',
         'isAcceptedBiometric',
     ];
+
+
+    public function seedLots()
+    {
+        return $this->hasMany(SeedLot::class);
+    }
+
 }
