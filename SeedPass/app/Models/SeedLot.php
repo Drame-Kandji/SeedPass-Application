@@ -33,4 +33,9 @@ class SeedLot extends Model
         return $this->belongsTo(Productor::class);
     }
 
+    public function alerts()
+    {
+      return $this->hasMany(Alert::class);
+    }
+
 }

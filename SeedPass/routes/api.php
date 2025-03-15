@@ -34,8 +34,28 @@ Route::prefix('ressource')->group(function () {
 
 
 Route::prefix('ressource')->group(function () {
-    Route::apiResource('lot-de-semence',SeedLotController::class);
+
+    // Liste des lots de semences (accessible à tous)
+    Route::get('lot-de-semence', [SeedLotController::class, 'index'])
+        ->middleware('auth:productor');
+
+    // Création d'un lot de semences (réservé aux admins)
+    Route::post('lot-de-semence', [SeedLotController::class, 'store'])
+        ->middleware(['auth:productor']);
+
+    // Afficher un lot spécifique (accessible aux utilisateurs authentifiés)
+    Route::get('lot-de-semence/{id}', [SeedLotController::class, 'show'])
+        ->middleware('auth:api');
+
+    // Mettre à jour un lot (réservé aux admins)
+    Route::put('lot-de-semence/{id}', [SeedLotController::class, 'update'])
+        ->middleware(['auth:api', 'role:admin']);
+
+    // Supprimer un lot (réservé aux admins)
+    Route::delete('lot-de-semence/{id}', [SeedLotController::class, 'destroy'])
+        ->middleware(['auth:api', 'role:admin']);
 });
+
 
 
 Route::prefix('ressource')->group(function () {
