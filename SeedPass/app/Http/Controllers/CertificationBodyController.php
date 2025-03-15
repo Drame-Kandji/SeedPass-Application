@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CertificationBody;
+
 use App\Http\Requests\StoreCertificationBodyRequest;
 use App\Http\Requests\UpdateCertificationBodyRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CertificationBodyController extends Controller
 {
@@ -49,7 +51,7 @@ class CertificationBodyController extends Controller
         if (!$certificationBody) {
             return response()->json(['message' => 'Certification Body not found'], 404);
         }
-        $certificationBody->update($request->validate());
+        $certificationBody->update($request->validated());
         return response()->json(['message'=>'Cet organisme est modifié avec succès '], 200);
     }
 

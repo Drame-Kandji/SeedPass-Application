@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Productor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductorRequest;
 
 class ProductorController extends Controller
@@ -32,7 +33,9 @@ class ProductorController extends Controller
     public function store(ProductorRequest $request)
     {
         try{
-            $productor = Productor::create($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::class($data['password']);
+            $productor = Productor::create($data);
             return response()->json([
                 'status'=>200,
                 'message'=>'Producteur créé avec success',
@@ -54,6 +57,7 @@ class ProductorController extends Controller
                 'status'=>200,
                 'message'=>'Producteur Trouvé',
                 'data'=>$productor
+
             ]);
         }catch(Exception $e){
             return response()->json($e);
@@ -70,7 +74,9 @@ class ProductorController extends Controller
             if(!$productor){
                 return response()->json('Producteur non trouvé', 404);
             }
-            $productor->update($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::class($data['password']);
+            $productor->update($data);
             return response()->json([
                 'status'=>200,
                 'message'=>'Producteur modifié avec success',

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Famer;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreFamerRequest;
 use App\Http\Requests\UpdateFamerRequest;
-use Exception;
 
 class FamerController extends Controller
 {
@@ -32,7 +33,9 @@ class FamerController extends Controller
     public function store(StoreFamerRequest $request)
     {
         try {
-            $famer = Famer::create($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $famer = Famer::create($data);
 
                 return response()->json(
                     [
@@ -74,8 +77,9 @@ class FamerController extends Controller
             if(!$famer){
                 return response()->json('Agriculteur non trouvé', 404);
             }
-
-            $famer->update($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $famer->update($data);
             return response()->json(
                 ['status'=>200,
                 'message'=>'Agriculteur mis à jour avec success ',

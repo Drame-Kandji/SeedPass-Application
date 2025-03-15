@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Distributor;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreDistributorRequest;
 use App\Http\Requests\UpdateDistributorRequest;
-use App\Models\Distributor;
-use Exception;
 
 class DistributorController extends Controller
 {
@@ -32,7 +33,9 @@ class DistributorController extends Controller
     public function store(StoreDistributorRequest $request)
     {
         try{
-            $distributor = Distributor::create($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $distributor = Distributor::create($data);
             return response()->json([
                 'status'=>200,
                 'message'=>'Distributeur créé avec success',
@@ -77,7 +80,9 @@ class DistributorController extends Controller
             if(!$distributor){
                 return response()->json('Distributeur non trouvé', 404);
             }
-            $distributor->update($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $distributor->update($data);
             response()->json( [
                'message'=>'Distributeur modifié avec success',
                'status'=>200,

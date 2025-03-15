@@ -13,10 +13,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('productors', ProductorController::class);
-Route::post('/productor/login', [ProductorController::class, 'login']);
+Route::apiResource('producteurs', ProductorController::class);
+Route::post('/producteur/login', [ProductorController::class, 'login']);
 
-Route::apiResource('famers', FamerController::class);
-Route::apiResource('distributors', DistributorController::class);
+Route::apiResource('agriculteurs', FamerController::class);
+Route::apiResource('distributeurs', DistributorController::class);
 Route::apiResource('lot-de-semence',SeedLotController::class);
 Route::apiResource('organisme-de-certification', \App\Http\Controllers\CertificationBodyController::class);
