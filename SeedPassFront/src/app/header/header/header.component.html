@@ -1,0 +1,23 @@
+
+  <header class="bg-green-500 text-white sticky top-0 h-25">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <h1 class="text-3xl font-semibold">{{title}}</h1>
+          <p class="text-xl ms-10">{{subtitle}}</p>
+        </div>
+        <nav class="hidden md:flex space-x-4">
+          <a *ngFor="let item of menuItems"
+             [routerLink]="item.link"
+             class="text-white hover:text-green-100">
+            {{ item.label }}
+          </a>
+          <a [routerLink]="['connexion']" routerLinkActive="router-link-active"
+             class="ml-2 bg-white text-green-500 hover:bg-green-100 px-4 py-1 rounded-full text-sm font-medium">
+            Connexion
+          </a>
+        </nav>
+        <!-- Mobile menu button would go here -->
+      </div>
+    </div>
+  </header>
