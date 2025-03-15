@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateCertificationBodyRequest;
 
 use Exception;
 use function Laravel\Prompts\password;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CertificationBodyController extends Controller
@@ -45,7 +44,7 @@ class CertificationBodyController extends Controller
                 'message' => 'L\'Organismes de certification créé avec succée',
                 'data' => $certification_bodies
             ]);
-        }catch (\Exception $e){
+        }catch (Exception $e){
             return response()->json($e);
         }
     }
@@ -66,7 +65,7 @@ class CertificationBodyController extends Controller
                 'message' => "L'organisme de certification trouvée",
                 'data' => $certificationBody
             ]);
-        }catch (\Exception $e){
+        }catch (Exception $e){
             return response()->json($e);
         }
     }

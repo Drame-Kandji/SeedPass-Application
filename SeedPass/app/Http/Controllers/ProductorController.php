@@ -7,6 +7,7 @@ use App\Models\Productor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductorRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductorController extends Controller
 {
@@ -34,7 +35,7 @@ class ProductorController extends Controller
     {
         try{
             $data = $request->validated();
-            $data['password'] = Hash::class($data['password']);
+            $data['password'] = Hash::make($data['password']);
             $productor = Productor::create($data);
             return response()->json([
                 'status'=>200,
@@ -107,8 +108,25 @@ class ProductorController extends Controller
        }
     }
 
-    public function login(Request $request){
+    public function login(){
+        $credentials = request(['email', 'password']);
+        if (! $token = auth::guard('productor')->attempt($credentials)) {
+            return response()->json(['error' => 'Identifiants incorrects'], 401);
+        }
+        return response()->json([
+            'token' => $token,
+            'status' => 200,
+            'message' => 'Connexion réussie',
+            'productor' => auth::guard('productor')->user()
+        ]);
+    }
 
-        dd('ok');
+    public function logout(){
+        auth()->guard('productor')->logout();
+        return response()->json(['message'=>'Deconnexion reussie']);
+    }
+
+    public function me(){
+        return response()->json(auth()->guard('productor')->user());
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Distributor;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreDistributorRequest;
 use App\Http\Requests\UpdateDistributorRequest;
+use Illuminate\Support\Facades\Auth;
 
 class DistributorController extends Controller
 {
@@ -115,5 +116,30 @@ class DistributorController extends Controller
         }catch(Exception $e){
             return response()->json($e);
         }
+    }
+
+    public function login(){
+        $credentials = request(['email', 'password']);
+        if(!$token=auth::guard('distributor')->attempt($credentials)){
+            return response()->json(['error'=>'Identifiants incorrects'], 401);
+        }
+        return response()->json([
+            'token'=>$token,
+            'status'=>200,
+            'message'=>'Connexion réussie',
+            'distributor'=>auth::guard('distributor')->user()
+        ]);
+
+    }
+
+    public function logout(){
+        auth::guard('distributor')->logout();
+        return response()->json([
+            'status'=>200,
+            'message'=>'Déconnexion réussie'
+        ]);
+    }
+    public function me(){
+        return response()->json(auth::guard('distributor')->user());
     }
 }

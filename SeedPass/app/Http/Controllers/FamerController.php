@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use Exception;
 use App\Models\Famer;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreFamerRequest;
 use App\Http\Requests\UpdateFamerRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class FamerController extends Controller
 {
@@ -106,5 +109,30 @@ class FamerController extends Controller
         } catch (Exception $e) {
             return response()->json($e);
         }
+    }
+
+    public function login(){
+        $credentials = request(['email', 'password']);
+        if (! $token = auth::guard('farmer')->attempt($credentials)) {
+            return response()->json(['error' => 'Identifiants incorrects'], 401);
+        }
+        return response()->json([
+            'token' => $token,
+            'status' => 200,
+            'message' => 'Connexion réussie',
+            'famer' => auth::guard('farmer')->user()
+        ]);
+
+    }
+
+    public function logout()
+    {
+        auth::guard()->logout();
+        return response()->json(['message' => 'Deconnexion reussie']);
+    }
+
+    public function me()
+    {
+        return response()->json(auth::guard('farmer')->user());
     }
 }
