@@ -19,4 +19,4 @@ Route::post('/productor/login', [ProductorController::class, 'login']);
 Route::apiResource('famers', FamerController::class);
 Route::apiResource('distributors', DistributorController::class);
 Route::apiResource('lot-de-semence',SeedLotController::class);
-Route::apiResource('organisme-de-certfication', CertificationBodyController::class);
+Route::apiResource('organisme-de-certification', \App\Http\Controllers\CertificationBodyController::class);

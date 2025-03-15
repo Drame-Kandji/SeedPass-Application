@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
+        'certification_body' => [  // ➜ Guard pour CertificationBody
+            'driver' => 'jwt',  // JWT pour API
+            'provider' => 'certification_bodies',
+        ],
     ],
 
     /*
@@ -69,6 +77,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'certification_bodies' => [  // ➜ Provider pour CertificationBody
+            'driver' => 'eloquent',
+            'model' => App\Models\CertificationBody::class, // Modèle à utiliser
+        ],
     ],
 
     /*
