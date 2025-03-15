@@ -40,6 +40,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
+        'certification_body' => [  // ➜ Guard pour CertificationBody
+            'driver' => 'jwt',  // JWT pour API
+            'provider' => 'certification_bodies',
+        ],
+        'distributor' => [  // ➜ Guard pour Distributor
+            'driver' => 'jwt',  // JWT pour API
+            'provider' => 'distributors',
+        ],
+        'farmer' => [  // ➜ Guard pour Farmer
+            'driver' => 'jwt',  // JWT pour API
+            'provider' => 'farmers',
+        ],
+        'productor' => [  // ➜ Guard pour Productor
+            'driver' => 'jwt',  // JWT pour API
+            'provider' => 'productors',
+        ],
     ],
 
     /*
@@ -69,6 +89,22 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'certification_bodies' => [  // ➜ Provider pour CertificationBody
+            'driver' => 'eloquent',
+            'model' => App\Models\CertificationBody::class, // Modèle à utiliser
+        ],
+        'distributors' => [  // ➜ Provider pour Distributor
+            'driver' => 'eloquent',
+            'model' => App\Models\Distributor::class, // Modèle à utiliser
+        ],
+        'farmers' => [  // ➜ Provider pour Farmer
+            'driver' => 'eloquent',
+            'model' => App\Models\Famer::class, // Modèle à utiliser
+        ],
+        'productors' => [  // ➜ Provider pour Productor
+            'driver' => 'eloquent',
+            'model' => App\Models\Productor::class, // Modèle à utiliser
+        ],
     ],
 
     /*

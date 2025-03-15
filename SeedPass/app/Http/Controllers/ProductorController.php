@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Exception;
+use App\Models\Productor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ProductorRequest;
+use Illuminate\Support\Facades\Auth;
+
+class ProductorController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        try{
+            $productors = Productor::all();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Liste des Producteurs',
+                'data'=>$productors
+            ]);
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(ProductorRequest $request)
+    {
+        try{
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $productor = Productor::create($data);
+            return response()->json([
+                'status'=>200,
+                'message'=>'Producteur créé avec success',
+                'data'=>$productor
+            ]);
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+       try{
+            $productor = Productor::find($id);
+            return response()->json([
+                'status'=>200,
+                'message'=>'Producteur Trouvé',
+                'data'=>$productor
+
+            ]);
+        }catch(Exception $e){
+            return response()->json($e);
+       }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(ProductorRequest $request, string $id)
+    {
+        try{
+            $productor = Productor::find($id);
+            if(!$productor){
+                return response()->json('Producteur non trouvé', 404);
+            }
+            $data = $request->validated();
+            $data['password'] = Hash::class($data['password']);
+            $productor->update($data);
+            return response()->json([
+                'status'=>200,
+                'message'=>'Producteur modifié avec success',
+                'data'=>$productor
+            ]);
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+       try{
+            $productor = Productor::find($id);
+            if(!$productor){
+                return response()->json('Producteur non trouvé', 404);
+            }
+            $productor->delete();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Producteur supprimé avec success'
+            ]);
+       }catch(Exception $e){
+           return response()->json($e);
+       }
+    }
+
+    public function login(){
+        $credentials = request(['email', 'password']);
+        if (! $token = auth::guard('productor')->attempt($credentials)) {
+            return response()->json(['error' => 'Identifiants incorrects'], 401);
+        }
+        return response()->json([
+            'token' => $token,
+            'status' => 200,
+            'message' => 'Connexion réussie',
+            'productor' => auth::guard('productor')->user()
+        ]);
+    }
+
+    public function logout(){
+        auth()->guard('productor')->logout();
+        return response()->json(['message'=>'Deconnexion reussie']);
+    }
+
+    public function me(){
+        return response()->json(auth()->guard('productor')->user());
+    }
+}
