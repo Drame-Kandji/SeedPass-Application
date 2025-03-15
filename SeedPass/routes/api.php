@@ -18,5 +18,11 @@ Route::apiResource('productors', ProductorController::class);
 Route::apiResource('famers', FamerController::class);
 Route::apiResource('distributors', DistributorController::class);
 Route::apiResource('lot-de-semence',SeedLotController::class);
-Route::apiResource('organisme-de-certification', CertificationBodyController::class);
-Route::post('organisme-de-certification/login',[CertificationBodyController::class,'login']);
+
+Route::prefix('ressource')->group(function () {
+    Route::apiResource('organisme-de-certification', CertificationBodyController::class);
+    Route::post('login',[CertificationBodyController::class,'login']);
+});
+
+
+
