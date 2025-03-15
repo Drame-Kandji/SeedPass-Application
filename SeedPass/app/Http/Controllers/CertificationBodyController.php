@@ -49,7 +49,7 @@ class CertificationBodyController extends Controller
         if (!$certificationBody) {
             return response()->json(['message' => 'Certification Body not found'], 404);
         }
-        $certificationBody->update($request->validate());
+        $certificationBody->update($request->validated());
         return response()->json(['message'=>'Cet organisme est modifié avec succès '], 200);
     }
 
