@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\SeedLot;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Productor extends Model
+
+class Productor extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     protected $fillable = [
@@ -22,8 +26,20 @@ class Productor extends Model
         'isAcceptedBiometric',
     ];
 
-    public function seed_lots()
+
+    public function seedLots()
     {
-       return $this->hasMany(SeedLot::class);
+        return $this->hasMany(SeedLot::class);
     }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 }

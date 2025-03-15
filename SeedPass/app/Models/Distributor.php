@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Distributor extends Model
+class Distributor extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     protected $fillable = [
@@ -21,5 +24,15 @@ class Distributor extends Model
         'isAcceptedCondition',
         'isAcceptedBiometric',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
 }

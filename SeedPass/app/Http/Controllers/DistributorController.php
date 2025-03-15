@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Distributor;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreDistributorRequest;
 use App\Http\Requests\UpdateDistributorRequest;
-use App\Models\Distributor;
-use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class DistributorController extends Controller
 {
@@ -32,7 +34,9 @@ class DistributorController extends Controller
     public function store(StoreDistributorRequest $request)
     {
         try{
-            $distributor = Distributor::create($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $distributor = Distributor::create($data);
             return response()->json([
                 'status'=>200,
                 'message'=>'Distributeur créé avec success',
@@ -77,7 +81,9 @@ class DistributorController extends Controller
             if(!$distributor){
                 return response()->json('Distributeur non trouvé', 404);
             }
-            $distributor->update($request->validated());
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $distributor->update($data);
             response()->json( [
                'message'=>'Distributeur modifié avec success',
                'status'=>200,
@@ -110,5 +116,30 @@ class DistributorController extends Controller
         }catch(Exception $e){
             return response()->json($e);
         }
+    }
+
+    public function login(){
+        $credentials = request(['email', 'password']);
+        if(!$token=auth::guard('distributor')->attempt($credentials)){
+            return response()->json(['error'=>'Identifiants incorrects'], 401);
+        }
+        return response()->json([
+            'token'=>$token,
+            'status'=>200,
+            'message'=>'Connexion réussie',
+            'distributor'=>auth::guard('distributor')->user()
+        ]);
+
+    }
+
+    public function logout(){
+        auth::guard('distributor')->logout();
+        return response()->json([
+            'status'=>200,
+            'message'=>'Déconnexion réussie'
+        ]);
+    }
+    public function me(){
+        return response()->json(auth::guard('distributor')->user());
     }
 }
