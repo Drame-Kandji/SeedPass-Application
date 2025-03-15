@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\CertificationBody;
-
 use App\Http\Requests\StoreCertificationBodyRequest;
 use App\Http\Requests\UpdateCertificationBodyRequest;
+
+use Exception;
+use function Laravel\Prompts\password;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CertificationBodyController extends Controller
 {
@@ -15,9 +19,18 @@ class CertificationBodyController extends Controller
      */
     public function index()
     {
-        $certification_bodies = CertificationBody::all();
+        try {
+            $certification_bodies = CertificationBody::all();
+            return response()->json([
+                'status' =>200,
+                'message' => 'Liste des Organismes de certification',
+                'data' => $certification_bodies
+            ]);
 
-        return response()->json($certification_bodies);
+        }catch (Exception $e){
+            return response()->json($e);
+
+        }
     }
 
     /**
@@ -25,8 +38,16 @@ class CertificationBodyController extends Controller
      */
     public function store(StoreCertificationBodyRequest $request)
     {
-        CertificationBody::create($request->validated());
-        return response()->json(['message' => 'Organisme de certification crée avec succès '], 201);
+        try {
+            $certification_bodies = CertificationBody::create($request->validated());
+            return response()->json([
+                'status' =>200,
+                'message' => 'L\'Organismes de certification créé avec succée',
+                'data' => $certification_bodies
+            ]);
+        }catch (\Exception $e){
+            return response()->json($e);
+        }
     }
 
     /**
@@ -35,11 +56,19 @@ class CertificationBodyController extends Controller
     public function show(string $id)
 
     {
-        $certificationBody = CertificationBody::find($id);
-        if (!$certificationBody) {
-            return response()->json(['message' => 'Non trouvée'], 404);
+        try {
+            $certificationBody = CertificationBody::find($id);
+            if (!$certificationBody) {
+                return response()->json(['message' => 'Non trouvée'], 404);
+            }
+            return response()->json([
+                'status' =>200,
+                'message' => "L'organisme de certification trouvée",
+                'data' => $certificationBody
+            ]);
+        }catch (\Exception $e){
+            return response()->json($e);
         }
-        return response()->json(['data' => $certificationBody], 200);
     }
 
     /**
@@ -47,12 +76,22 @@ class CertificationBodyController extends Controller
      */
     public function update(StoreCertificationBodyRequest $request, string $id)
     {
-        $certificationBody = CertificationBody::find($id);
-        if (!$certificationBody) {
-            return response()->json(['message' => 'Certification Body not found'], 404);
+        try {
+            $certificationBody = CertificationBody::find($id);
+            if (!$certificationBody) {
+                return response()->json(['message' => 'Certification Body not found'], 404);
+            }
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            $certificationBody->update($data);
+            return response()->json([
+                'status' =>200,
+                'message' =>'Organisme de certification mis à jour avec succée',
+                'data' => $certificationBody
+            ]);
+        }catch (\Exception $e){
+            return response()->json($e);
         }
-        $certificationBody->update($request->validated());
-        return response()->json(['message'=>'Cet organisme est modifié avec succès '], 200);
     }
 
     /**
@@ -60,9 +99,13 @@ class CertificationBodyController extends Controller
      */
     public function destroy(string $id)
     {
-        $certificationBody = CertificationBody::find($id);
-        $certificationBody->delete();
-        return response()->json(['message' => 'Organisme supprimé avec succès'], 204);
+        try {
+            $certificationBody = CertificationBody::find($id);
+            $certificationBody->delete();
+            return response()->json(['message' => 'Organisme supprimé avec succès'], 204);
+        }catch (\Exception $e){
+            return response()->json($e);
+        }
     }
 
     //Fonction pour se connecter
@@ -76,16 +119,21 @@ class CertificationBodyController extends Controller
 
         return response()->json([
             'token' => $token,
+            'status' => 200,
+            'message' => 'Connecté avec succès',
             'certification_body' => Auth::guard('certification_body')->user()
         ]);
     }
+
 
     //fonction pour se deconnecter
 
     public function logout()
     {
         Auth::guard('certification_body')->logout();
-        return response()->json(['message' => 'Déconnexion réussie']);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Déconnexion réussie']);
     }
 
     public function me()

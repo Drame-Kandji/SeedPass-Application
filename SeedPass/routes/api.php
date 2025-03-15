@@ -7,6 +7,8 @@ use App\Http\Controllers\SeedLotController;
 use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\CertificationBodyController;
+use App\Http\Controllers\CertificationBodyController;
+
 
 
 Route::get('/user', function (Request $request) {
@@ -19,4 +21,11 @@ Route::post('/producteur/login', [ProductorController::class, 'login']);
 Route::apiResource('agriculteurs', FamerController::class);
 Route::apiResource('distributeurs', DistributorController::class);
 Route::apiResource('lot-de-semence',SeedLotController::class);
-Route::apiResource('organisme-de-certification', \App\Http\Controllers\CertificationBodyController::class);
+
+Route::prefix('ressource')->group(function () {
+    Route::apiResource('organisme-de-certification', CertificationBodyController::class);
+    Route::post('login',[CertificationBodyController::class,'login']);
+});
+
+
+

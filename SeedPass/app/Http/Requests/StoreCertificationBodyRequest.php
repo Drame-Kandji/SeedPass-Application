@@ -28,7 +28,7 @@ class StoreCertificationBodyRequest extends FormRequest
             'identificationNumber'=>['required','string'],
             'emailAddress'=> ['required','string','email'],
             'phoneNumber' => ['required','string'],
-            'password'=>'string',
+            'password'=>'string'
         ];
     }
 }
