@@ -1,0 +1,111 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-6">
+  <div class="mb-2">
+    <label class="block text-gray-700 mb-2 bg-blend-hard-light">Prenom</label>
+    <input
+      type="text"
+      formControlName="prenom"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+  <div class="mb-2">
+    <label class="block text-gray-700 mb-2 bg-blend-hard-light">Nom</label>
+    <input
+      type="text"
+      formControlName="nom"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 mb-2">Profil</label>
+    <select formControlName="profil"
+    class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+      <option value="Agriculteur">Agriculture</option>
+      <option value="Producteur">Producteur</option>
+      <option value="Distributeur">Distributeur</option>
+    </select>
+    <p class=" text-red-600">{{passwordError}}</p>
+
+  </div>
+  <div class="mb-2">
+    <label class="block text-gray-700 mb-2 bg-blend-hard-light">Numéro CNI</label>
+    <input
+      type="text"
+      formControlName="numeroCNI"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+  <div class="mb-2">
+    <label class="block text-gray-700 mb-2 bg-blend-hard-light">Email</label>
+    <input
+      type="text"
+      formControlName="emailOrPhone"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+  <div class="mb-2">
+    <label class="block text-gray-700 mb-2 bg-blend-hard-light">Téléphone</label>
+    <input
+      type="text"
+      formControlName="telephone"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 mb-2">Mot de passe</label>
+    <input
+      type="password"
+      formControlName="password"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 mb-2">Confirmer votre Mot de passe</label>
+    <input
+      type="password"
+      formControlName="Confirmpassword"
+      class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+    >
+  </div>
+
+  <div class="mb-6 flex items-center">
+    <input
+      type="checkbox"
+      id="rememberMe"
+      formControlName="rememberMe"
+      class="mr-2"
+    >
+    <label for="rememberMe" class="text-gray-600">Se souvenir de moi</label>
+    <a href="#" class="text-blue-500 ml-auto">Mot de passe oublié ?</a>
+  </div>
+
+  <button type="submit" (click)="onLog()" class="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded font-medium transition-colors">
+    S'inscrire
+  </button>
+
+  <div class="mt-6 text-center text-gray-500">
+    Ou connectez-vous avec
+  </div>
+
+  <div class="mt-4 flex justify-between space-x-2">
+    <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
+      Google
+    </button>
+    <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
+      Facebook
+    </button>
+    <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
+      Code SMS
+    </button>
+  </div>
+
+  <button type="button" class="w-full border border-blue-500 text-blue-500 mt-4 p-3 rounded font-medium hover:bg-blue-50 transition-colors">
+    Se connecter avec empreinte / Face ID
+  </button>
+
+  <div class="mt-6 text-center text-gray-600">
+    Besoin d'aide ? <a href="#" class="text-blue-500">Contactez le support</a>
+  </div>
+</form>
