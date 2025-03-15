@@ -48,6 +48,10 @@ return [
             'driver' => 'jwt',  // JWT pour API
             'provider' => 'certification_bodies',
         ],
+        'user' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ]
     ],
 
     /*
@@ -68,19 +72,23 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
-        ],
+//        'users' => [
+//            'driver' => 'eloquent',
+//            'model' => env('AUTH_MODEL', App\Models\User::class),
+//        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+//         'users' => [
+//             'driver' => 'database',
+//             'table' => 'users',
+//         ],
         'certification_bodies' => [  // ➜ Provider pour CertificationBody
             'driver' => 'eloquent',
             'model' => App\Models\CertificationBody::class, // Modèle à utiliser
         ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ]
     ],
 
     /*

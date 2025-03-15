@@ -36,7 +36,7 @@ class CertificationBodyController extends Controller
     public function store(StoreCertificationBodyRequest $request)
     {
         try {
-            CertificationBody::create($request->validated());
+            $certification_bodies = CertificationBody::create($request->validated());
             return response()->json([
                 'status' =>200,
                 'message' => 'L\'Organismes de certification créé avec succée',

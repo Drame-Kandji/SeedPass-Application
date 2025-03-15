@@ -21,4 +21,9 @@ class Productor extends Model
         'isAcceptedCondition',
         'isAcceptedBiometric',
     ];
+
+    public function seed_lots()
+    {
+       return $this->hasMany(SeedLot::class);
+    }
 }
