@@ -16,4 +16,4 @@ Route::apiResource('productors', ProductorController::class);
 Route::apiResource('famers', FamerController::class);
 Route::apiResource('distributors', DistributorController::class);
 Route::apiResource('lot-de-semence',SeedLotController::class);
-Route::apiResource('organisme-de-certfication', \App\Models\CertificationBody::class);
+Route::apiResource('organisme-de-certification', \App\Http\Controllers\CertificationBodyController::class);

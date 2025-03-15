@@ -13,7 +13,9 @@ class CertificationBodyController extends Controller
      */
     public function index()
     {
-        return CertificationBody::all();
+        $certification_bodies = CertificationBody::all();
+
+        return response()->json($certification_bodies);
     }
 
     /**
@@ -21,7 +23,7 @@ class CertificationBodyController extends Controller
      */
     public function store(StoreCertificationBodyRequest $request)
     {
-        CertificationBody::create($request->validate());
+        CertificationBody::create($request->validated());
         return response()->json(['message' => 'Organisme de certification crée avec succès '], 201);
     }
 
@@ -60,4 +62,34 @@ class CertificationBodyController extends Controller
         $certificationBody->delete();
         return response()->json(['message' => 'Organisme supprimé avec succès'], 204);
     }
+
+    //Fonction pour se connecter
+    public function login()
+    {
+        $credentials = request(['emailAddress', 'password']);
+
+        if (!$token = Auth::guard('certification_body')->attempt($credentials)) {
+            return response()->json(['error' => 'Identifiants incorrects'], 401);
+        }
+
+        return response()->json([
+            'token' => $token,
+            'certification_body' => Auth::guard('certification_body')->user()
+        ]);
+    }
+
+    //fonction pour se deconnecter
+
+    public function logout()
+    {
+        Auth::guard('certification_body')->logout();
+        return response()->json(['message' => 'Déconnexion réussie']);
+    }
+
+    public function me()
+    {
+        return response()->json(Auth::guard('certification_body')->user());
+    }
+
+
 }
