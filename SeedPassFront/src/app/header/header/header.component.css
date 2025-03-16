@@ -1,0 +1,18 @@
+.seedpass-header {
+  background-color: #2ecc71;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+
+  h1{
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 20px;
+  }
+
+  p {
+    margin: 5px 0 0;
+    font-size: 14px;
+  }
+}

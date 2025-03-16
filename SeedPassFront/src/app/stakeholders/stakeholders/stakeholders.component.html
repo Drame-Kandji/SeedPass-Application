@@ -1,0 +1,23 @@
+<section class="py-10">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-8 text-gray-900">Pour tous les acteurs de la filière</h2>
+
+    <div class=" ms-70 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div *ngFor="let stakeholder of stakeholders" class="p-4">
+        <h3 [ngClass]="{
+          'text-green-600': stakeholder.color === 'green',
+          'text-blue-600': stakeholder.color === 'blue',
+          'text-yellow-600': stakeholder.color === 'yellow',
+          'text-purple-600': stakeholder.color === 'purple'
+        }" class="font-semibold mb-3 text-3xl">
+          {{ stakeholder.title }}
+        </h3>
+        <ul class="text-sm text-gray-700">
+          <li *ngFor="let point of stakeholder.points" class="mb-1 text-xl">
+            {{ point }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
