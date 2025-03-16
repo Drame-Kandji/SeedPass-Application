@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\SeedLot;
 use Illuminate\Database\Seeder;
+use App\Models\CertificationBody;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class SeedLotSeeder extends Seeder
+class CertificationBodySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run()
     {
-        // Créer 10 lots de semences
-        SeedLot::factory()->count(10)->create();
+        // Créer 10 organismes de certification
+        CertificationBody::factory()->count(10)->create();
     }
 }
