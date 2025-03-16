@@ -1,81 +1,145 @@
-<div class="bg-white ms-7">
-  <!-- Tabs -->
-  <div class="flex text-center m">
-    <div
-     [ngClass]="{'bg-blue-500 text-white': activeTab === 'connexion', 'bg-gray-400': activeTab !== 'connexion'}"
-      class="w-1/2 p-4 font-medium cursor-pointer transition-colors"
-      (click)="setActiveTab('connexion')">
-      Connexion
-    </div>
-    <div
-      [ngClass]= "{'bg-gray-400 text-white': activeTab === 'connexion', 'bg-blue-500': activeTab !== 'connexion'}"
-      class="w-1/2 p-4 font-medium cursor-pointer transition-colors"
-      (click)="setActiveTab('inscription')">
-      Inscription
+<!-- login.component.html -->
+<div class="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+  <div class="w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="flex flex-col md:flex-row">
+      <!-- Left Side - Login Form -->
+      <div class="w-full md:w-1/2 p-8 mt-50">
+        <div class="mb-8">
+          <h1 class="text-2xl font-medium text-green-500">SeedPass</h1>
+          <p class="text-sm text-gray-600">la traçabilité au service de l'agriculture africaine</p>
+        </div>
+
+        <!-- <div class="flex mb-6">
+          <div class="flex-1">
+            <button class="w-full py-2 bg-green-500 text-white rounded-l-md">CONNEXION</button>
+          </div>
+          <div class="flex-1">
+            <button class="w-full py-2 bg-gray-300 text-gray-700 rounded-r-md">INSCRIPTION</button>
+          </div>
+        </div> -->
+
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+
+          <div class="mb-6">
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
+          >
+            SE CONNECTER
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Side - Features -->
+      <div class="w-full md:w-1/2 p-8 bg-gray-50">
+        <h2 class="text-lg font-medium text-gray-800 mb-6">Pourquoi choisir SeedPass ?</h2>
+
+        <div class="relative">
+          <!-- Features diagram -->
+          <div class="flex justify-center mb-8 z-0">
+            <div class="flex justify-center mb-10">
+              <div class=" relative w-64 h-64">
+                <!-- Circle background -->
+                <div class="absolute inset-0 bg-yellow-100 rounded-full"></div>
+
+                <!-- Circles -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4">
+                  <div class="w-16 h-16 rounded-full bg-green-400 flex items-center justify-center text-black text-sm size-0.5">
+                    Certification
+                  </div>
+                </div>
+
+                <div class="absolute top-1/2 left-0 transform -translate-x-1/4 -translate-y-1/2">
+                  <div class="w-16 h-16 rounded-full bg-blue-400 flex items-center justify-center  text-black text-sm">
+                    Production
+                  </div>
+                </div>
+
+                <div class="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2">
+                  <div class="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center  text-black text-sm">
+                    Distribution
+                  </div>
+                </div>
+
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/4">
+                  <div class="w-16 h-16 rounded-full bg-red-400 flex items-center justify-center  text-black text-sm">
+                    Utilisation
+                  </div>
+                </div>
+
+                <!-- Connecting lines (simplified) -->
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                  <path d="M 50 25 Q 70 50 50 75" stroke="green" fill="transparent" stroke-width="1" />
+                  <path d="M 50 25 Q 30 50 50 75" stroke="green" fill="transparent" stroke-width="1" />
+                  <path d="M 25 50 Q 50 60 75 50" stroke="green" fill="transparent" stroke-width="1" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature list -->
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mr-3 mt-1">
+                <span class="text-white text-xs">✓</span>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-800">Garantie d'authenticité des ressources</h3>
+                <p class="text-sm text-gray-600">Système de provenance et de qualité de toutes les semences</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center mr-3 mt-1">
+                <span class="text-white text-xs">⇄</span>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-800">Traçabilité complète de la chaîne</h3>
+                <p class="text-sm text-gray-600">Toutes les étapes du processus sont identifiées et enregistrées</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center mr-3 mt-1">
+                <span class="text-white text-xs">↑</span>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-800">Amélioration des rendements</h3>
+                <p class="text-sm text-gray-600">Utiliser des semences certifiées pour de meilleurs résultats</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center mr-3 mt-1">
+                <span class="text-white text-xs">♥</span>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-800">Un réseau agricole interconnecté</h3>
+                <p class="text-sm text-gray-600">Tous les acteurs de la chaîne de valeur sont ainsi identifiables</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-   @if (activeTab === 'connexion') {
-  <!-- Login Form -->
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-6">
-    <div class="mb-6">
-      <label class="block text-gray-700 mb-2 bg-blend-hard-light">Email ou téléphone</label>
-      <input
-        type="text"
-        formControlName="emailOrPhone"
-        class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-      >
-    </div>
-
-    <div class="mb-4">
-      <label class="block text-gray-700 mb-2">Mot de passe</label>
-      <input
-        type="password"
-        formControlName="password"
-        class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-      >
-    </div>
-
-    <div class="mb-6 flex items-center">
-      <input
-        type="checkbox"
-        id="rememberMe"
-        formControlName="rememberMe"
-        class="mr-2"
-      >
-      <label for="rememberMe" class="text-gray-600">Se souvenir de moi</label>
-      <a href="#" class="text-blue-500 ml-auto">Mot de passe oublié ?</a>
-    </div>
-
-    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded font-medium transition-colors">
-      Se connecter
-    </button>
-
-    <div class="mt-6 text-center text-gray-500">
-      Ou connectez-vous avec
-    </div>
-
-    <div class="mt-4 flex justify-between space-x-2">
-      <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
-        Google
-      </button>
-      <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
-        Facebook
-      </button>
-      <button type="button" class="flex-1 border border-gray-300 rounded p-3 hover:bg-gray-100 transition-colors">
-        Code SMS
-      </button>
-    </div>
-
-    <button type="button" class="w-full border border-blue-500 text-blue-500 mt-4 p-3 rounded font-medium hover:bg-blue-50 transition-colors">
-      Se connecter avec empreinte / Face ID
-    </button>
-
-    <div class="mt-6 text-center text-gray-600">
-      Besoin d'aide ? <a href="#" class="text-blue-500">Contactez le support</a>
-    </div>
-  </form>
-}
-@else {
-<app-inscription/>
-}
 </div>
