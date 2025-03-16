@@ -27,11 +27,16 @@ class StoreSeedLotRequest extends FormRequest
             'yearOfHarvest' => ['required','date_format:Y'],
             'processing' => ['required','string'],
             'certification' => ['required','string'],
-            'germinationQuality' => ['required','double'],
+            'germinationQuality' => ['required','numeric'],
             'productionSplot' => ['required','string'],
-            'quantityProduced' => ['required','double'],
+            'quantityProduced' => ['required','numeric'],
             'growingConditions' => ['string'],
             'isCertified' => ['boolean'],
+            'certification_body_id' => ['integer'],
+            'productor_id' => ['integer'],
+            'lot_number' => ['string'],
+            'image' => ['string'],
+            'qr_code' => ['string']
         ];
     }
 }
