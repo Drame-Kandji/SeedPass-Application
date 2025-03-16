@@ -37,7 +37,7 @@ Route::prefix('ressource')->group(function () {
 
     // Liste des lots de semences (accessible à tous)
     Route::get('lot-de-semence', [SeedLotController::class, 'index'])
-        ->middleware('auth:productor');
+        ->middleware('auth:productor','auth:famer','auth:distributor','auth:certification_body');
 
     // Création d'un lot de semences (réservé aux admins)
     Route::post('lot-de-semence', [SeedLotController::class, 'store'])
