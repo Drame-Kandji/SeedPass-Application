@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inscription',
@@ -11,6 +12,7 @@ import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, ValidationError
 export class InscriptionComponent {
   signupForm: FormGroup;
   selectedProfile: string = 'Agriculteur';
+  biometric_page=inject(Router)
 
   constructor(private fb: FormBuilder) {
     this.signupForm = this.fb.group({
@@ -43,6 +45,7 @@ export class InscriptionComponent {
   onSubmit() {
     if (this.signupForm.valid) {
       console.log('Form submitted', this.signupForm.value);
+      this.biometric()
       // Implement signup logic here
     } else {
       // Mark all fields as touched to trigger validation messages
@@ -51,6 +54,11 @@ export class InscriptionComponent {
       });
     }
 
+  }
+
+  biometric()
+  {
+    this.biometric_page.navigateByUrl('reconnaissanceFacial')
   }
 
  /*  onLog()
