@@ -18,7 +18,8 @@ class CertificationBody extends Authenticatable implements JWTSubject
         'identificationNumber',
         'emailAddress',
         'phoneNumber',
-        'password'
+        'password',
+        'profile'
 
     ];
 

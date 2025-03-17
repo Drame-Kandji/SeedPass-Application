@@ -12,7 +12,8 @@ class Alert extends Model
     protected $fillable = [
         'name',
         'description',
-        'date',
+        'date'
+
 
     ];
 

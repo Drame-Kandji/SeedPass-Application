@@ -23,6 +23,7 @@ class Distributor extends Authenticatable implements JWTSubject
         'password',
         'isAcceptedCondition',
         'isAcceptedBiometric',
+        'profile'
     ];
 
     public function getJWTIdentifier()

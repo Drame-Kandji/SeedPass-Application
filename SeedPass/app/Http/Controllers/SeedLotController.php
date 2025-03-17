@@ -24,12 +24,13 @@ class SeedLotController extends Controller
      */
     public function store(StoreSeedLotRequest $request)
     {
-        $data = $request->validated();
-
-
         try {
+            $data = $request->validated();
+
             // Ajouter le numéro de lot généré si non fourni dans la requête
-           $data['lot_number'] = SeedLot::generateUniqueLotNumber();
+
+            $data['lot_number'] = SeedLot::generateUniqueLotNumber();
+
 
             $seedlot = SeedLot::create($data);
 
@@ -38,7 +39,7 @@ class SeedLotController extends Controller
                 'seedlot' => $seedlot
             ], 201);
         } catch (\Exception $e) {
-            return response()->json([$e->getMessage()], 500);
+            return response()->json($e->getMessage());
         }
 
     }
@@ -92,4 +93,32 @@ class SeedLotController extends Controller
         return response()->json(['message' => 'Lot de semence supprimé avec succès'], 200);
 
     }
+
+    //cette fonction permet de certifier un lot de semence
+    public function certify($id)
+    {
+        try {
+            // Récupérer le lot de semences
+            $seedLot = SeedLot::findOrFail($id);
+
+            // Vérifier si l'utilisateur est un organisme de certification
+            if (auth()->guard('certification_body')->check()) {
+                return response()->json(['error' => 'Accès non autorisé'], 403);
+            }
+
+            // Mettre à jour la certification
+            $seedLot->update(['isCertified' => true]);
+
+            return response()->json([
+                'message' => 'Lot de semence certifié avec succès',
+                'seedlot' => $seedLot
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erreur lors de la certification'], 500);
+        }
+    }
+
+
+
+
 }
