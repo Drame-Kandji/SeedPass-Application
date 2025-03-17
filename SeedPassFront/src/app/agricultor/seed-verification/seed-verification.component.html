@@ -1,0 +1,134 @@
+<!-- seed-verification.component.html -->
+<div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="w-48 bg-gray-800 text-white flex flex-col">
+      <!-- Logo -->
+      <div class="bg-green-500 p-4">
+        <h1 class="text-2xl font-bold">SeedPass</h1>
+      </div>
+
+      <!-- Menu Items -->
+      <div class="flex-grow p-4 flex flex-col">
+        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-8">
+          Tableau de bord
+        </button>
+
+        <!-- Menu links -->
+        <div class="flex items-center text-white mb-4">
+          <div class="w-4 h-4 rounded-full bg-white mr-2"></div>
+          <span>Scan de code QR</span>
+        </div>
+
+        <div class="flex items-center mb-8">
+          <div class="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+          <span>Mon Profile</span>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <div class="p-4">
+        <button
+          class="w-full text-left text-white hover:text-gray-300 transition duration-200"
+          (click)="logout()">
+          Déconnexion
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow flex flex-col">
+      <!-- Top Bar -->
+      <div class="bg-white p-4 flex justify-between items-center shadow-sm">
+
+        <!-- User Profile -->
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div class="flex-grow p-6 overflow-auto">
+        <!-- User Greeting -->
+        <div class="mb-4">
+          <p class="text-gray-800">Bonjour, {{username}} {{userRole}}</p>
+        </div>
+
+        <!-- Verification Section -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-medium text-gray-700 mb-4">Vérification de semences</h2>
+
+          <!-- Verification Methods -->
+          <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border border-gray-100">
+            <div class="flex flex-wrap gap-4">
+              <button
+                class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-6 px-4 rounded transition duration-200"
+                (click)="scanQRCode()">
+                Scanner QR Code
+              </button>
+              <button
+                class="flex-1 bg-gray-200 hover:bg-gray-300 text-blue-500 py-6 px-4 rounded transition duration-200"
+                (click)="searchById()">
+                Saisir identifiant
+              </button>
+              <button
+                class="flex-1 bg-gray-200 hover:bg-gray-300 text-blue-500 py-6 px-4 rounded transition duration-200"
+                (click)="performSearch()">
+                Rechercher
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div *ngIf="verificationPerformed">
+            <h3 class="text-lg font-medium text-gray-700 mb-3">Résultats de vérification</h3>
+
+            <!-- Authenticity Badge -->
+            <div class="mb-6 p-3 bg-green-100 rounded-lg flex items-center" [ngClass]="{'bg-green-100': isAuthentic, 'bg-red-100': !isAuthentic}">
+              <div class="w-6 h-6 rounded-full mr-3" [ngClass]="{'bg-green-500': isAuthentic, 'bg-red-500': !isAuthentic}"></div>
+              <span class="text-lg" [ngClass]="{'text-green-600': isAuthentic, 'text-red-600': !isAuthentic}">
+                {{ isAuthentic ? 'Authentique' : 'Non authentique' }}
+              </span>
+            </div>
+
+            <!-- Info Panels -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <!-- Seed Information -->
+              <div class="bg-gray-200 rounded-lg p-4">
+                <h4 class="text-lg font-medium text-gray-700 mb-3">Informations Semence</h4>
+
+                <div class="text-sm text-gray-700">
+                  <p class="mb-1">Filtrer par variété</p>
+                  <p class="mb-1"><strong>Variété:</strong> {{seedInfo.variety}}</p>
+                  <p class="mb-1"><strong>Producteur:</strong> {{seedInfo.producer}}</p>
+                  <p class="mb-1"><strong>Date de production:</strong> {{seedInfo.productionDate}}</p>
+                  <p class="mb-1"><strong>Certification:</strong> {{seedInfo.certification}}</p>
+                  <p class="mb-1"><strong>Lot:</strong> {{seedInfo.lot}}</p>
+                </div>
+              </div>
+
+              <!-- Traceability Information -->
+              <div class="bg-gray-200 rounded-lg p-4">
+                <h4 class="text-lg font-medium text-gray-700 mb-3">Traçabilité</h4>
+
+                <div class="text-sm text-gray-700">
+                  <p class="mb-1"><strong>Production:</strong> {{traceabilityInfo.production}}</p>
+                  <p class="mb-1"><strong>Certification:</strong> {{traceabilityInfo.certification}}</p>
+                  <p class="mb-1"><strong>Distribution:</strong> {{traceabilityInfo.distribution}}</p>
+                  <p class="mb-1"><strong>Utilisation:</strong> {{traceabilityInfo.utilization}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Report Problem Button -->
+            <div class="flex justify-center">
+              <button
+                class="bg-red-400 hover:bg-red-500 text-white py-2 px-8 rounded transition duration-200"
+                (click)="reportProblem()">
+                Signaler un problème
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

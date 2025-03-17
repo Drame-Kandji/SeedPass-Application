@@ -1,22 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule} from '@angular/forms';
-import { DatePipe, NgClass, NgStyle, UpperCasePipe } from '@angular/common';
-import { InscriptionComponent } from "../../inscription/inscription/inscription.component";
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
-  imports: [NgClass, ReactiveFormsModule, InscriptionComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
   activeTab: string = 'connexion';
+  home=inject(Router)
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      emailOrPhone: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
       rememberMe: [false]
     });
@@ -29,6 +29,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log('Form submitted:', this.loginForm.value);
+      this.home.navigateByUrl('Agricultor');
     }
   }
 }
