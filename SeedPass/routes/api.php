@@ -39,8 +39,8 @@ Route::prefix('ressource')->group(function () {
 Route::prefix('ressource')->group(function () {
 
     // Liste des lots de semences (accessible à tous)
-    Route::get('lot-de-semence', [SeedLotController::class, 'index'])
-        ->middleware('auth:productor','auth:famer','auth:distributor','auth:certification_body');
+    Route::get('lot-de-semence', [SeedLotController::class, 'index']);
+        //->middleware('auth:productor','auth:famer','auth:distributor','auth:certification_body');
 
     // Création d'un lot de semences (réservé aux admins)
     Route::post('lot-de-semence', [SeedLotController::class, 'store']);
@@ -57,6 +57,10 @@ Route::prefix('ressource')->group(function () {
     // Supprimer un lot (réservé aux admins)
     Route::delete('lot-de-semence/{id}', [SeedLotController::class, 'destroy'])
         ->middleware(['auth:api', 'role:admin']);
+        
+    Route::patch('lot-de-semence/{id}/certify', [SeedLotController::class, 'certify'])
+    ->middleware(['auth:certification_body']); // Utilisation du guard 'certification_body'
+
 });
 
 

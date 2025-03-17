@@ -33,6 +33,7 @@ class FamerFactory extends Factory
             'password' => Hash::make('password'),
             'isAcceptedCondition' => $this->faker->boolean,
             'isAcceptedBiometric' => $this->faker->boolean,
+
         ];
     }
 }

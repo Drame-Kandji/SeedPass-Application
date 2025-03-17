@@ -24,6 +24,8 @@ class Productor extends Authenticatable implements JWTSubject
         'password',
         'isAcceptedCondition',
         'isAcceptedBiometric',
+        'profile'
+
     ];
 
 

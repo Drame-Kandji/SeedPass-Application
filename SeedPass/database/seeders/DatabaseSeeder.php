@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             SeedLotSeeder::class,
-            ProductorSeeder::class,
-            FamerSeeder::class,
-            CertificationBodySeeder::class
+            //ProductorSeeder::class,
+            //FamerSeeder::class,
+            //CertificationBodySeeder::class
 
 
         ]);

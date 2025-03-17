@@ -93,4 +93,31 @@ class SeedLotController extends Controller
         return response()->json(['message' => 'Lot de semence supprimé avec succès'], 200);
 
     }
+
+    public function certify($id)
+{
+    try {
+        // Récupérer le lot de semences
+        $seedLot = SeedLot::findOrFail($id);
+
+        // Vérifier si l'utilisateur est un organisme de certification
+        if (auth()->guard('certification_body')->check()) {
+            return response()->json(['error' => 'Accès non autorisé'], 403);
+        }
+
+        // Mettre à jour la certification
+        $seedLot->update(['isCertified' => true]);
+
+        return response()->json([
+            'message' => 'Lot de semence certifié avec succès',
+            'seedlot' => $seedLot
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erreur lors de la certification'], 500);
+    }
+}
+
+
+
+
 }
