@@ -14,7 +14,7 @@ class SeedLotController extends Controller
      */
     public function index()
     {
-        $seedLots = SeedLot::all();
+        $seedLots = SeedLot::with('productor')->get();
         return response()->json(['data' => $seedLots],200);
     }
 
@@ -24,26 +24,23 @@ class SeedLotController extends Controller
      */
     public function store(StoreSeedLotRequest $request)
     {
-        
+        $data = $request->validated();
+
 
         try {
-            $data = $request->validated();
-        
             // Ajouter le numéro de lot généré si non fourni dans la requête
-          
-            $data['lot_number'] =SeedLot::generateUniqueLotNumber();
-            
-        
+           $data['lot_number'] = SeedLot::generateUniqueLotNumber();
+
             $seedlot = SeedLot::create($data);
-        
+
             return response()->json([
                 'message' => 'Lot de semence créé avec succès',
                 'seedlot' => $seedlot
             ], 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erreur lors de la création'], 500);
+            return response()->json([$e->getMessage()], 500);
         }
-        
+
     }
 
     /**
@@ -52,7 +49,7 @@ class SeedLotController extends Controller
     public function show(string $id)
 
     {
-        $seedlot = SeedLot::find($id);
+        $seedlot = SeedLot::with('productor')->find($id);
         return response()->json(['data' => $seedlot],200);
 
     }
@@ -66,14 +63,14 @@ class SeedLotController extends Controller
         try {
             $data = $request->validated();
             $seedlot = SeedLot::findOrFail($id);
-        
+
             // Ne pas modifier le lot_number si l'utilisateur ne le met pas à jour
             if (!isset($data['lot_number'])) {
                 $data['lot_number'] = $seedlot->lot_number;
             }
-        
+
             $seedlot->update($data);
-        
+
             return response()->json([
                 'message' => 'Lot de semence mis à jour avec succès',
                 'seedlot' => $seedlot
@@ -81,7 +78,7 @@ class SeedLotController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Erreur lors de la mise à jour'], 500);
         }
-        
+
     }
 
     /**
