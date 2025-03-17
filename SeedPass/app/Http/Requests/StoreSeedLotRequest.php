@@ -22,21 +22,22 @@ class StoreSeedLotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'variety'=>['required','string'],
-            'geographicOrigin'=>['required','string'],
-            'yearOfHarvest' => ['required','date_format:Y'],
-            'processing' => ['required','string'],
-            'certification' => ['required','string'],
-            'germinationQuality' => ['required','numeric'],
-            'productionSplot' => ['required','string'],
-            'quantityProduced' => ['required','numeric'],
-            'growingConditions' => ['string'],
-            'isCertified' => ['boolean'],
-            'certification_body_id' => ['integer'],
-            'productor_id' => ['integer'],
-            'lot_number' => ['string'],
-            'image' => ['string'],
-            'qr_code' => ['string']
+            'variety' => ['required', 'string'],
+            'geographicOrigin' => ['required', 'string'],
+            'yearOfHarvest' => ['required', 'integer', 'digits:4'],
+            'processing' => ['required', 'string'],
+            'certification' => ['required', 'string'],
+            'germinationQuality' => ['required', 'numeric'],
+            'productionSplot' => ['required', 'string'],
+            'quantityProduced' => ['required', 'numeric'],
+            'growingConditions' => ['nullable', 'string'],
+            'isCertified' => ['nullable', 'boolean'],
+            'certification_body_id' => ['nullable', 'integer'],
+            'productor_id' => ['required', 'integer'],
+            'lot_number' => ['required', 'string'],
+            'image' => ['nullable', 'string'],
+            'qr_code' => ['nullable', 'string'],
+
         ];
     }
 }

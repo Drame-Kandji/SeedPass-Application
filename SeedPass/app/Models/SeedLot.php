@@ -18,7 +18,7 @@ class SeedLot extends Model
         'certification',
         'germinationQuality',
         'productionSplot',
-        'quantityProduced', 
+        'quantityProduced',
         'growingConditions',
         'isCertified',
         'certification_body_id',
@@ -44,7 +44,7 @@ class SeedLot extends Model
     }
 
 
-    public static function generateUniqueLotNumber()
+    public static function generateUniqueLotNumber(): string
     {
         do {
             $lotNumber = 'LOT-' . strtoupper(Str::random(8)); // Exemple : LOT-AB12CD34
