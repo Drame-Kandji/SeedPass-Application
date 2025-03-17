@@ -1,9 +1,10 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { WebcamComponent } from "../../webcam/webcam/webcam.component";
 
 @Component({
   selector: 'app-biometric',
-  imports: [NgClass,NgIf],
+  imports: [NgClass, NgIf, WebcamComponent],
   templateUrl: './biometric.component.html',
   styleUrl: './biometric.component.css'
 })
@@ -14,6 +15,8 @@ export class BiometricComponent {
   scanInterval: any;
 fingerDetected: any;
 scanningInProgress: any;
+@ViewChild('videoElement') videoElement!: ElementRef;
+stream!: MediaStream;
 
   constructor() { }
 
@@ -26,7 +29,7 @@ scanningInProgress: any;
   startScan() {
     this.scanningState = 'scanning';
     this.scanProgress = 0;
-
+    this.stopCamera();
     // Simulate facial scanning progress
     this.scanInterval = setInterval(() => {
       this.scanProgress += 5;
@@ -45,6 +48,7 @@ scanningInProgress: any;
     if (this.scanInterval) {
       clearInterval(this.scanInterval);
     }
+    this.startCamera()
   }
 
   continueProcess() {
@@ -52,4 +56,28 @@ scanningInProgress: any;
     console.log('Continuing to next step after successful facial recognition');
     // Navigation logic would go here
   }
+
+
+    async startCamera() {
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        this.videoElement.nativeElement.srcObject = this.stream;
+      } catch (error) {
+        console.error('Erreur d’accès à la caméra :', error);
+      }
+    }
+
+    stopCamera() {
+      if (this.stream) {
+        this.stream.getTracks().forEach(track => track.stop());
+      }
+    }
+
+    ngOnInit() {
+      this.startCamera();
+    }
+
+    ngOnDestroy() {
+      this.stopCamera();
+    }
 }
