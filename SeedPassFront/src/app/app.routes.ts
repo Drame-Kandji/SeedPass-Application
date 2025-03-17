@@ -3,10 +3,12 @@ import { HomeComponent } from './home/home/home.component';
 import { PageConnexionComponent } from './page-connexion/page-connexion/page-connexion.component';
 import { InscriptionComponent } from './inscription/inscription/inscription.component';
 import { BiometricComponent } from './biometric/biometric/biometric.component';
+import { SeedVerificationComponent } from './agricultor/seed-verification/seed-verification.component';
 
 export const routes: Routes = [
  {path:'',component:HomeComponent},
  {path:'connexion',component:PageConnexionComponent},
  {path:'inscription',component:InscriptionComponent},
- {path:'reconnaissanceFacial',component:BiometricComponent}
+ {path:'reconnaissanceFacial',component:BiometricComponent},
+ {path:'Agricultor',component:SeedVerificationComponent}
 ];

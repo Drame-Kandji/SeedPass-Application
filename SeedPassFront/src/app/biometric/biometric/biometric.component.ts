@@ -1,10 +1,11 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { WebcamComponent } from "../../webcam/webcam/webcam.component";
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-biometric',
-  imports: [NgClass, NgIf, WebcamComponent],
+  imports: [NgClass, NgIf],
   templateUrl: './biometric.component.html',
   styleUrl: './biometric.component.css'
 })
@@ -15,6 +16,7 @@ export class BiometricComponent {
   scanInterval: any;
 fingerDetected: any;
 scanningInProgress: any;
+homepage=inject(Router)
 @ViewChild('videoElement') videoElement!: ElementRef;
 stream!: MediaStream;
 
@@ -52,9 +54,7 @@ stream!: MediaStream;
   }
 
   continueProcess() {
-    // Handle continuing to the next step
-    console.log('Continuing to next step after successful facial recognition');
-    // Navigation logic would go here
+    this.homepage.navigateByUrl('Agricultor')
   }
 
 
