@@ -17,15 +17,17 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('ressource')->group(function () {
     Route::apiResource('producteurs', ProductorController::class);
-    Route::post('/producteur/login', [ProductorController::class, 'login']);
+//    Route::post('/producteur/login', [ProductorController::class, 'login']);
     Route::post('/producteur/logout', [ProductorController::class, 'logout']);
 });
 
 
 Route::prefix('ressource')->group(function () {
-    Route::apiResource('agriculteurs', FamerController::class);
+    Route::apiResource('agriculteurs/', FamerController::class);
     Route::post('agriculteur/login',[FamerController::class,'login']);
-    Route::post('agriculteur/logout',[FamerController::class,'logout']);
+    Route::delete('agriculteur/logout',[FamerController::class,'logout']);
+    Route::post('agriculteur/scan-lot-de-semence', [FamerController::class, 'scan_seedLot']);
+
 });
 
 
@@ -50,7 +52,7 @@ Route::prefix('ressource')->group(function () {
 
     // Afficher un lot spécifique (accessible aux utilisateurs authentifiés)
     Route::get('lot-de-semence/{id}', [SeedLotController::class, 'show']);
-        -//>middleware('auth:productor');
+        //->middleware('auth:productor');
 
     // Mettre à jour un lot (réservé aux admins)
     Route::put('lot-de-semence/{id}', [SeedLotController::class, 'update']);
