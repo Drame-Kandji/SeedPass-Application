@@ -16,4 +16,12 @@ class Alert extends Model
 
     ];
 
+    public function famer()
+    {
+       return $this->belongsTo(Famer::class);
+    }
+    public function seed_lot()
+    {
+        return $this->belongsTo(SeedLot::class);
+    }
 }

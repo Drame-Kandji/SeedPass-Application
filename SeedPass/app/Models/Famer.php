@@ -32,4 +32,13 @@ class Famer extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    //Relation entre agriculteur et alerte(Signaler plusieurs alertes)
+
+    public function alerts()
+    {
+        return $this->hasMany(Alert::class);
+    }
+
+
 }

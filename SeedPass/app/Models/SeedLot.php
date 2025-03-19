@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SeedLot extends Model
 {
@@ -17,10 +18,14 @@ class SeedLot extends Model
         'certification',
         'germinationQuality',
         'productionSplot',
-        'quantityProduced',
+        'quantityProduced', 
         'growingConditions',
         'isCertified',
         'certification_body_id',
+        'productor_id',
+        'lot_number',
+        'image',
+        'qr_code'
 
     ];
 
@@ -32,5 +37,21 @@ class SeedLot extends Model
     {
         return $this->belongsTo(Productor::class);
     }
+
+    public function alerts()
+    {
+      return $this->hasMany(Alert::class);
+    }
+
+
+    public static function generateUniqueLotNumber()
+    {
+        do {
+            $lotNumber = 'LOT-' . strtoupper(Str::random(8)); // Exemple : LOT-AB12CD34
+        } while (self::where('lot_number', $lotNumber)->exists());
+
+        return $lotNumber;
+    }
+
 
 }
