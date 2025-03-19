@@ -52,7 +52,7 @@ return [
             'driver' => 'jwt',  // JWT pour API
             'provider' => 'distributors',
         ],
-        'farmer' => [  // ➜ Guard pour Farmer
+        'famer' => [  // ➜ Guard pour Farmer
             'driver' => 'jwt',  // JWT pour API
             'provider' => 'farmers',
         ],
