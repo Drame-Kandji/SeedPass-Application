@@ -53,7 +53,9 @@ class SeedLotController extends Controller
 
     {
         $seedlot = SeedLot::with('productor')->find($id);
-        return response()->json(['data' => $seedlot],200);
+        $certified = $this->certify($seedlot->id);
+
+        return  $certified;
 
     }
 
@@ -105,44 +107,75 @@ class SeedLotController extends Controller
      */
 
 
-public function certify($id)
-{
-    try {
-        // Récupérer le lot de semences
-        $seedLot = SeedLot::findOrFail($id);
+    public function certify($id)
+    {
+        try {
+            // Récupérer le lot de semences
+            $seedLot = SeedLot::findOrFail($id);
+            // dd($seedLot);
 
-        // Vérifier si l'utilisateur est un organisme de certification
-        if (!auth()->guard('certification_body')->check()) {
-            return response()->json(['error' => 'Accès non autorisé'], 403);
-        }
+            // Vérifier si l'utilisateur est un organisme de certification
 
-        // Mettre à jour la certification
-        $seedLot->update(['isCertified' => true]);
+            // if (!auth()->guard('certification_body')->check()) {
+            //     return response()->json(['error' => 'Accès non autorisé'], 403);
+            // }
 
-        // Créer les données du QR Code en JSON
-        $qrCodeData = $seedLot->lot_number;
+            // Mettre à jour la certification
+            if ($seedLot->isCertified) {
+                $seedLot->update(['isCertified' => false]);
+                return response()->json(['error' => 'Lot de semence deja certifié'], 400);
+            }
 
-        //si le QrCode vous renvoie une erreur, veuillez installer le package simple-qrcode
-        // avec la commmande: composer require simplesoftwareio/simple-qrcode
-        // Générer le QR Code avec les données du lot
-        $qrCodeImage = QrCode::format('png')->size(300)->generate($qrCodeData);
+            $seedLot->update(['isCertified' => true]);
 
-        // Sauvegarder le QR code dans le stockage
-        $qrCodePath = "qrcodes/lot_{$seedLot->lot_number}.png";
-        Storage::disk('public')->put($qrCodePath, $qrCodeImage);
+            // Créer les données du QR Code
+            $qrCodeData = "*Semence certifiée :*\n" .
+            "Numéro de lot : " . $seedLot->lot_number . "\n" .
+            "Zone Geographique:"  . $seedLot->geographicOrigin . "\n" .
+            "Annee de production : " . $seedLot->yearOfHarvest . "\n" .
+            "Traitement:" . $seedLot->processing . "\n" .
+            "Condition de croissance : " . $seedLot->growingConditions . "\n" .
+            "Variété : " . $seedLot->variety . "\n\n" .
 
-        // Mettre à jour le chemin du QR code dans la base de données
-        $seedLot->update(['qr_code' => $qrCodePath]);
+            "*Production:*\n" .
+            "Producteur : " . $seedLot->productor->firstName . " " . $seedLot->productor->lastName . "\n" .
+            "Email : " . $seedLot->productor->email . "\n" .
+            "Adresse : " . $seedLot->productor->address . "\n" .
+            "Organisation : " . $seedLot->productor->organisation . "\n" .
+            "Identification : " . $seedLot->productor->identificationNumber . "\n" .
+            "Téléphone : " . $seedLot->productor->phone . "\n\n" .
 
-        return response()->json([
-            'message' => 'Lot de semence certifié et QR Code généré avec succès',
-            'seedlot' => $seedLot,
-            'qr_code_url' => asset("storage/{$qrCodePath}")
-        ], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Erreur lors de la certification'], 500);
+            "*Certification :*\n" .
+            "Oganisme de certification : " . $seedLot->certification_body->name . "\n" .
+            "Date de certification : " . now()->format('Y-m-d') . "\n" .
+            "Numéro d'identification  : " . $seedLot->certification_body->identificationNumber . "\n\n" .
+            "Adresse :" . $seedLot->certification_body->location . "\n".
+            "Email :" . $seedLot->certification_body->emailAddress . "\n" .
+            "Téléphone :" . $seedLot->certification_body->phoneNumber . "\n";
+
+
+
+            //si le QrCode vous renvoie une erreur, veuillez installer le package simple-qrcode
+            // avec la commmande: composer require simplesoftwareio/simple-qrcode
+            // Générer le QR Code avec les données du lot
+            $qrCodeImage = QrCode::format('svg')->size(300)->generate($qrCodeData);
+            //dd($qrCodeImage);
+
+            // Sauvegarder le QR code dans le stockage
+            $qrCodePath = "qrcodes/lot_{$seedLot->lot_number}.svg";
+            Storage::disk('public')->put($qrCodePath, $qrCodeImage);
+
+            // Mettre à jour le chemin du QR code dans la base de données
+            $seedLot->update(['qr_code' => $qrCodePath]);
+
+            return response()->json([
+                'message' => 'Lot de semence certifié et QR Code généré avec succès',
+                'seedlot' => $seedLot,
+                'qr_code_url' => asset("storage/{$qrCodePath}")
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erreur lors de la certification', 'details' => $e->getMessage()], 500);        }
     }
-}
 
 
 
