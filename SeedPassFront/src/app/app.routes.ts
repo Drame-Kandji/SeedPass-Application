@@ -4,11 +4,18 @@ import { PageConnexionComponent } from './page-connexion/page-connexion/page-con
 import { InscriptionComponent } from './inscription/inscription/inscription.component';
 import { BiometricComponent } from './biometric/biometric/biometric.component';
 import { SeedVerificationComponent } from './agricultor/seed-verification/seed-verification.component';
+import { ProductorComponent } from './productor/productor/productor.component';
+import { Component } from '@angular/core';
+import { SemenceRegistrationComponent } from './registration-semence/semence-registration/semence-registration.component';
+import { StockManagementComponent } from './stock-management/stock-management/stock-management.component';
 
 export const routes: Routes = [
  {path:'',component:HomeComponent},
  {path:'connexion',component:PageConnexionComponent},
  {path:'inscription',component:InscriptionComponent},
  {path:'reconnaissanceFacial',component:BiometricComponent},
- {path:'Agricultor',component:SeedVerificationComponent}
+ {path:'Agricultor',component:SeedVerificationComponent},
+ {path:'productor',component:ProductorComponent},
+ {path:'register/semence',component:SemenceRegistrationComponent},
+ {path:'stock/management',component:StockManagementComponent}
 ];

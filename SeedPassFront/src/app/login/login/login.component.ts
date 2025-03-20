@@ -29,7 +29,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log('Form submitted:', this.loginForm.value);
-      this.home.navigateByUrl('Agricultor');
+      this.home.navigateByUrl('productor');
     }
   }
 }
