@@ -30,10 +30,10 @@ export class InscriptionComponent {
       email: ['', [Validators.required, Validators.email]],
 
       // Informations professionnelles
-      organisation: [''],
-      address: [''],
-      phone: [''],
-      identificationNumber: [''],
+      organisation: ['',[Validators.required, Validators.email]],
+      address: ['',[Validators.required, Validators.email]],
+      phone: ['',[Validators.required, Validators.email]],
+      identificationNumber: ['',[Validators.required, Validators.email]],
 
       // Sécurité
       password: ['', Validators.required],
@@ -41,7 +41,7 @@ export class InscriptionComponent {
 
       // Conditions
       isAcceptedCondition: [false, Validators.requiredTrue],
-      isAcceptedBiometric: [false]
+      isAcceptedBiometric: [false,Validators.requiredTrue]
     });
   }
 
@@ -53,7 +53,7 @@ export class InscriptionComponent {
      let user:UserInterface={
        firstName: '',
        lastName: '',
-       profil: '',
+       profile: '',
        cni: 0,
        email: '',
        organisation: '',
@@ -68,7 +68,7 @@ export class InscriptionComponent {
       if(this.selectedProfile=='Agriculteur')
       {
           user=this.signupForm.value
-          user['profil']=this.selectedProfile
+          user['profile']=this.selectedProfile
           user['cni']=parseInt(this.signupForm.get('cni')?.value)
           user['phone']=parseInt(this.signupForm.get('phone')?.value)
           console.log('Form submitted',user);
@@ -81,7 +81,7 @@ export class InscriptionComponent {
       if(this.selectedProfile=='Producteur')
       {
         user=this.signupForm.value
-        user['profil']=this.selectedProfile
+        user['profile']=this.selectedProfile
         user['cni']=parseInt(this.signupForm.get('cni')?.value)
         user['phone']=parseInt(this.signupForm.get('phone')?.value)
         console.log('Form submitted',user);
@@ -94,7 +94,7 @@ export class InscriptionComponent {
       else
       {
         user=this.signupForm.value
-          user['profil']=this.selectedProfile
+          user['profile']=this.selectedProfile
           user['cni']=parseInt(this.signupForm.get('cni')?.value)
           user['phone']=parseInt(this.signupForm.get('phone')?.value)
           console.log('Form submitted',user);

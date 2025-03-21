@@ -2,7 +2,7 @@ export interface UserInterface {
    id?:number;
    firstName : string;
    lastName: string;
-   profil:string;
+   profile:string;
    cni:number;
    email: string;
    organisation:string;

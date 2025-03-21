@@ -5,7 +5,6 @@ import { InscriptionComponent } from './inscription/inscription/inscription.comp
 import { BiometricComponent } from './biometric/biometric/biometric.component';
 import { SeedVerificationComponent } from './agricultor/seed-verification/seed-verification.component';
 import { ProductorComponent } from './productor/productor/productor.component';
-import { Component } from '@angular/core';
 import { SemenceRegistrationComponent } from './registration-semence/semence-registration/semence-registration.component';
 import { StockManagementComponent } from './stock-management/stock-management/stock-management.component';
 
