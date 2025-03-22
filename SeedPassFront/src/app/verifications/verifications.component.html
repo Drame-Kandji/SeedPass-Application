@@ -1,0 +1,47 @@
+<div class="verifications-container">
+    <h2>Vérification des Semences</h2>
+  
+    <!-- Formulaire d'enregistrement -->
+    <form (ngSubmit)="onSubmit()" class="semence-form">
+      <div class="form-group">
+        <label for="variete">Variété :</label>
+        <input type="text" id="variete" [(ngModel)]="nouvelleSemence.variete" name="variete" required>
+      </div>
+      <div class="form-group">
+        <label for="quantite">Quantité :</label>
+        <input type="number" id="quantite" [(ngModel)]="nouvelleSemence.quantite" name="quantite" required>
+      </div>
+      <div class="form-group">
+        <label for="statut">Statut :</label>
+        <select id="statut" [(ngModel)]="nouvelleSemence.statut" name="statut" required>
+          <option value="Certifié">Certifié</option>
+          <option value="Non certifié">Non certifié</option>
+        </select>
+      </div>
+      <button type="submit">Enregistrer</button>
+    </form>
+  
+    <!-- Liste des semences -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Variété</th>
+          <th>Quantité</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let semence of semences">
+          <td>{{ semence.id }}</td>
+          <td>{{ semence.variete }}</td>
+          <td>{{ semence.quantite }}</td>
+          <td>
+            <span [ngClass]="{'certifie': semence.statut === 'Certifié', 'non-certifie': semence.statut === 'Non certifié'}">
+              {{ semence.statut === 'Certifié' ? '✅ Certifié' : '❌ Non certifié' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
