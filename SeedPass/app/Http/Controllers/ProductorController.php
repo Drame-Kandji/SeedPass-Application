@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SeedLot;
 use Exception;
 use App\Models\Productor;
 use Illuminate\Http\Request;
@@ -18,10 +19,15 @@ class ProductorController extends Controller
     {
         try{
             $productors = Productor::all();
+
+            //nombre de lots enregistrés
+            $lots = SeedLot::where('productor_id', Auth::id())->count();
+
             return response()->json([
                 'status'=>200,
                 'message'=>'Liste des Producteurs',
-                'data'=>$productors
+                'data'=>$productors,
+                'lots'=>$lots
             ]);
         }catch(Exception $e){
             return response()->json($e);
@@ -35,6 +41,7 @@ class ProductorController extends Controller
     {
         try{
             $data = $request->validated();
+            dd($data);
             $data['password'] = Hash::make($data['password']);
             $productor = Productor::create($data);
             return response()->json([

@@ -53,10 +53,10 @@ class SeedLotController extends Controller
 
     {
         $seedlot = SeedLot::with('productor')->find($id);
-        $certified = $this->certify($seedlot->id);
+//        $certified = $this->certify($seedlot->id);
 
-        return  $certified;
-
+//        return  $certified;
+        return response()->json($seedlot);
     }
 
     /**
