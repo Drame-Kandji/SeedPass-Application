@@ -1,0 +1,115 @@
+<!-- src/app/dashboard/dashboard.component.html -->
+<div class="p-6 bg-gray-100 min-h-screen">
+  <!-- En-tête -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <p class="text-gray-500 text-sm">Bonjour,</p>
+      <h1 class="text-2xl font-bold">Bonjour, Ibrahima Producteur</h1>
+      <p class="text-gray-500 text-sm">Dernière mise à jour: 04/03/2025</p>
+    </div>
+  </div>
+
+  <!-- Statistiques principales -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <!-- Lots -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h3 class="text-gray-500 mb-2">Lots enregistrés</h3>
+      <div class="flex items-end">
+        <span class="text-3xl font-bold">{{stats.lots}}</span>
+        <span class="ml-2 text-gray-500 text-sm">Lots</span>
+      </div>
+      <p class="text-green-500 text-sm mt-2">+ 4 ce mois</p>
+    </div>
+
+    <!-- Variétés -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h3 class="text-gray-500 mb-2">Variétés</h3>
+      <div class="flex items-end">
+        <span class="text-3xl font-bold">{{stats.varietes}}</span>
+      </div>
+      <p class="text-green-500 text-sm mt-2">+5% vs le mois dernier</p>
+    </div>
+
+    <!-- Alertes -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h3 class="text-gray-500 mb-2">Alertes</h3>
+      <div class="flex items-end">
+        <span class="text-3xl font-bold">{{stats.alertes}}</span>
+      </div>
+      <p class="text-orange-500 text-sm mt-2">Urgent - Notifications</p>
+    </div>
+  </div>
+
+  <!-- Calendrier et raccourcis -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <!-- Calendrier -->
+    <div class="col-span-2 bg-white p-4 rounded-lg shadow">
+      <h3 class="font-semibold mb-4">Calendrier des semences</h3>
+
+      <!-- Jours de la semaine -->
+      <div class="grid grid-cols-7 mb-2">
+        <div class="text-center text-gray-500">Lun</div>
+        <div class="text-center text-gray-500">Mar</div>
+        <div class="text-center text-gray-500">Mer</div>
+        <div class="text-center text-gray-500">Jeu</div>
+        <div class="text-center text-gray-500">Ven</div>
+        <div class="text-center text-gray-500">Sam</div>
+        <div class="text-center text-gray-500">Dim</div>
+      </div>
+
+      <!-- Dates du calendrier -->
+      <div *ngFor="let week of calendarWeeks" class="grid grid-cols-7 mb-2">
+        <div *ngFor="let day of week"
+             class="text-center p-2"
+             [ngClass]="{
+               'bg-green-100 text-green-800': day === '3' || day === '18',
+               'bg-yellow-100 text-yellow-800': day === '7' || day === '21',
+               'bg-red-100 text-red-800': day === '10'
+             }">
+          {{day}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Raccourcis -->
+    <div class="col-span-1 bg-white p-4 rounded-lg shadow">
+      <h3 class="font-semibold mb-4">Raccourcis</h3>
+
+      <div class="space-y-2">
+        <a href="#" class="block w-full text-center bg-blue-500 text-white py-2 px-4 rounded">
+          Enregistrer un lot
+        </a>
+        <a href="#" class="block w-full text-center bg-blue-500 text-white py-2 px-4 rounded">
+          Gérer le stock
+        </a>
+        <a href="#" class="block w-full text-center bg-yellow-500 text-white py-2 px-4 rounded">
+          Consulter les rapports
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activité récente -->
+  <div class="bg-white p-4 rounded-lg shadow">
+    <h3 class="font-semibold mb-4">Activité récente</h3>
+
+    <div class="space-y-4">
+      <div *ngFor="let activity of recentActivities" class="flex items-start">
+        <!-- Indicateur de statut -->
+        <div class="w-2 h-2 mt-2 mr-3 rounded-full"
+             [ngClass]="{
+               'bg-green-500': activity.status === 'success',
+               'bg-blue-500': activity.status === 'info',
+               'bg-yellow-500': activity.status === 'warning'
+             }">
+        </div>
+
+        <!-- Texte de l'activité -->
+        <div class="flex-grow">
+          <p>{{activity.text}}</p>
+          <p class="text-gray-500 text-sm">{{activity.date}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

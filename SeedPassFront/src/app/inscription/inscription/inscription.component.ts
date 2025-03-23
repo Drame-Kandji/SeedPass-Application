@@ -2,6 +2,10 @@ import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserInterface } from '../../interface/user-interface';
+import { FamerService } from '../../services/famer.service';
+import { ProductorService } from '../../services/productor.service';
+import { DistributorService } from '../../services/distributor.service';
 
 @Component({
   selector: 'app-inscription',
@@ -11,30 +15,33 @@ import { Router } from '@angular/router';
 })
 export class InscriptionComponent {
   signupForm: FormGroup;
+  famerService=inject(FamerService);
+  productorService=inject(ProductorService);
+  distributor=inject(DistributorService);
   selectedProfile: string = 'Agriculteur';
   biometric_page=inject(Router)
 
   constructor(private fb: FormBuilder) {
     this.signupForm = this.fb.group({
       // Informations personnelles
-      lastName: ['', Validators.required],
       firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       cni: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
 
       // Informations professionnelles
-      organization: [''],
-      address: [''],
-      telephone: [''],
-      identificationNumber: [''],
+      organisation: ['',[Validators.required, Validators.email]],
+      address: ['',[Validators.required, Validators.email]],
+      phone: ['',[Validators.required, Validators.email]],
+      identificationNumber: ['',[Validators.required, Validators.email]],
 
       // Sécurité
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
 
       // Conditions
-      acceptTerms: [false, Validators.requiredTrue],
-      allowDataCollection: [false]
+      isAcceptedCondition: [false, Validators.requiredTrue],
+      isAcceptedBiometric: [false,Validators.requiredTrue]
     });
   }
 
@@ -43,8 +50,61 @@ export class InscriptionComponent {
   }
 
   onSubmit() {
+     let user:UserInterface={
+       firstName: '',
+       lastName: '',
+       profile: '',
+       cni: 0,
+       email: '',
+       organisation: '',
+       address: '',
+       phone: 0,
+       identificationNumber: '',
+       password: '',
+       isAcceptedCondition: false,
+       isAcceptedBiometric: false
+     };
     if (this.signupForm.valid) {
-      console.log('Form submitted', this.signupForm.value);
+      if(this.selectedProfile=='Agriculteur')
+      {
+          user=this.signupForm.value
+          user['profile']=this.selectedProfile
+          user['cni']=parseInt(this.signupForm.get('cni')?.value)
+          user['phone']=parseInt(this.signupForm.get('phone')?.value)
+          console.log('Form submitted',user);
+          this.famerService.SaveFamer(user).subscribe(
+            (response) => {
+              console.log(response);
+            }
+          )
+      }
+      if(this.selectedProfile=='Producteur')
+      {
+        user=this.signupForm.value
+        user['profile']=this.selectedProfile
+        user['cni']=parseInt(this.signupForm.get('cni')?.value)
+        user['phone']=parseInt(this.signupForm.get('phone')?.value)
+        console.log('Form submitted',user);
+        this.productorService.SaveProdutor(user).subscribe(
+          (response) => {
+            console.log(response);
+          }
+        )
+      }
+      else
+      {
+        user=this.signupForm.value
+          user['profile']=this.selectedProfile
+          user['cni']=parseInt(this.signupForm.get('cni')?.value)
+          user['phone']=parseInt(this.signupForm.get('phone')?.value)
+          console.log('Form submitted',user);
+          this.productorService.SaveProdutor(user).subscribe(
+            (response) => {
+              console.log(response);
+            }
+          )
+      }
+      //console.log('Form submitted',user);
       this.biometric()
       // Implement signup logic here
     } else {
