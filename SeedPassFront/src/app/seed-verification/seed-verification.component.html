@@ -1,0 +1,119 @@
+<!-- seed-verification.component.html -->
+<div class="seed-verification-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Vérification d'authenticité des semences</h2>
+    </div>
+
+    <div class="card-content">
+      <!-- Options de scan -->
+      <div *ngIf="!scanResult && !isLoading" class="scan-options">
+        <div class="option-buttons">
+          <button class="btn btn-primary" (click)="enableScanner()">
+            <i class="fa fa-camera"></i> Scanner un QR code
+          </button>
+
+          <div class="separator">OU</div>
+
+          <label class="btn btn-secondary file-upload-btn">
+            <i class="fa fa-upload"></i> Télécharger un QR code
+            <input type="file" (change)="handleFileUpload($event)" accept="image/*" hidden>
+          </label>
+        </div>
+      </div>
+
+      <!-- Scanner QR -->
+      <div *ngIf="scannerEnabled" class="scanner-container">
+        <zxing-scanner
+          (scanSuccess)="handleScanSuccess($event)"
+          [tryHarder]="true">
+        </zxing-scanner>
+        <button class="btn btn-danger" (click)="disableScanner()">Annuler</button>
+      </div>
+
+      <!-- Chargement -->
+      <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Vérification en cours...</p>
+      </div>
+
+      <!-- Erreur -->
+      <div *ngIf="errorMessage" class="error-container">
+        <div class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+        <button class="btn btn-primary" (click)="enableScanner()">Réessayer</button>
+      </div>
+
+      <!-- Résultat de la vérification -->
+      <div *ngIf="verificationResult && !isLoading" class="verification-result">
+        <div [ngClass]="'status-badge ' + getVerificationStatus()">
+          <span *ngIf="getVerificationStatus() === verificationStatus.VALID">
+            <i class="fa fa-check-circle"></i> Semence authentique
+          </span>
+          <span *ngIf="getVerificationStatus() === verificationStatus.EXPIRED">
+            <i class="fa fa-exclamation-triangle"></i> Certification expirée
+          </span>
+          <span *ngIf="getVerificationStatus() === verificationStatus.INVALID">
+            <i class="fa fa-times-circle"></i> Semence non authentique
+          </span>
+          <span *ngIf="getVerificationStatus() === verificationStatus.UNKNOWN">
+            <i class="fa fa-question-circle"></i> Statut inconnu
+          </span>
+        </div>
+
+        <!-- Détails de la semence -->
+        <div *ngIf="scanResult && scanResult.credentialSubject" class="seed-details">
+          <h3>Informations sur la semence</h3>
+
+          <div class="detail-grid">
+            <div class="detail-item">
+              <strong>Numéro de lot:</strong>
+              <span>{{ scanResult.credentialSubject.lotNumber }}</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Variété:</strong>
+              <span>{{ scanResult.credentialSubject.variety }}</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Origine géographique:</strong>
+              <span>{{ scanResult.credentialSubject.geographicOrigin }}</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Année de récolte:</strong>
+              <span>{{ scanResult.credentialSubject.yearOfHarvest }}</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Qualité de germination:</strong>
+              <span>{{ scanResult.credentialSubject.germinationQuality }}%</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Certification:</strong>
+              <span>{{ scanResult.credentialSubject.certification }}</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Producteur:</strong>
+              <span>{{ scanResult.credentialSubject.producer.name }} ({{ scanResult.credentialSubject.producer.organisation }})</span>
+            </div>
+
+            <div class="detail-item">
+              <strong>Parcelle de production:</strong>
+              <span>{{ scanResult.credentialSubject.productionSplot }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton pour vérifier une autre semence -->
+        <button class="btn btn-primary mt-4" (click)="enableScanner()">
+          Vérifier une autre semence
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

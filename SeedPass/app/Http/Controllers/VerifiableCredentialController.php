@@ -140,11 +140,19 @@ class VerifiableCredentialController extends Controller
     {
         $path = 'qrcodes/seed_' . $lotNumber . '.png';
 
-        // Générer et sauvegarder le QR code
+//        // Générer et sauvegarder le QR code
+//        QrCode::format('png')
+//            ->size(600)
+//            ->errorCorrection('H')
+//            ->generate(json_encode($credential), storage_path('app/public/' . $path));
+
+        $credentialUrl = url('/api/credential/' . $seed->lot_number);
         QrCode::format('png')
             ->size(300)
-            ->errorCorrection('H')
-            ->generate(json_encode($credential), storage_path('app/public/' . $path));
+            ->margin(2)
+            ->errorCorrection('M')  // Moyen au lieu de Haut
+            ->encoding('UTF-8')
+            ->generate($credentialUrl, storage_path('app/public/' . $path));
 
         return $path;
     }

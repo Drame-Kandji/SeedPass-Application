@@ -7,14 +7,17 @@ import { SeedVerificationComponent } from './agricultor/seed-verification/seed-v
 import { ProductorComponent } from './productor/productor/productor.component';
 import { SemenceRegistrationComponent } from './registration-semence/semence-registration/semence-registration.component';
 import { StockManagementComponent } from './stock-management/stock-management/stock-management.component';
+import {ScanSemenceComponent} from './scan-semence/scan-semence/scan-semence.component';
 
 export const routes: Routes = [
- {path:'',component:HomeComponent},
+ {path:'',component:ScanSemenceComponent},
  {path:'connexion',component:PageConnexionComponent},
  {path:'inscription',component:InscriptionComponent},
  {path:'reconnaissanceFacial',component:BiometricComponent},
  {path:'Agricultor',component:SeedVerificationComponent},
  {path:'productor',component:ProductorComponent},
  {path:'register/semence',component:SemenceRegistrationComponent},
- {path:'stock/management',component:StockManagementComponent}
+ {path:'stock/management',component:StockManagementComponent},
+  {path:'scan',component:ScanSemenceComponent}
+
 ];
