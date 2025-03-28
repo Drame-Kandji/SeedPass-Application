@@ -1,0 +1,179 @@
+<!-- seed-registration-form.component.html -->
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+ <app-sidebar/>
+  <!-- Main Content -->
+  <div class="flex-1 overflow-y-auto">
+    <!-- Header -->
+    <header class="bg-white p-4 flex justify-between items-center border-b">
+      <div>
+        <h1 class="text-xl font-medium">Bonjour, {{userName}}</h1>
+        <p class="text-sm text-gray-500">{{currentDate}}</p>
+      </div>
+      <div class="">
+        <input type="text" placeholder="Rechercher..." class="pl-2 pr-8 py-1 border rounded text-sm">
+        <button class="absolute right-2 top-1.5 text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Form Content -->
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-lg font-medium">Enregistrement d'un lot de semence</h2>
+        <button class="bg-green-500 text-white py-1 px-3 rounded-md flex items-center text-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Ajouter
+        </button>
+      </div>
+
+      <form [formGroup]="seedForm" (ngSubmit)="onSubmit()" class="bg-white rounded-md shadow-sm p-6">
+        <!-- Informations sur la semence -->
+        <div class="mb-6">
+          <h3 class="text-md font-medium mb-4">Informations sur la semence</h3>
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Variété -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Variété <span class="text-red-500">*</span>
+              </label>
+              <input type="text" formControlName="variete"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+
+            <!-- Espèce -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Espèce <span class="text-red-500">*</span>
+              </label>
+              <div class="">
+                <select formControlName="espece"
+                       class="w-full border rounded px-3 py-2 text-sm appearance-none focus:outline-none focus:ring-1 focus:ring-green-500 bg-white">
+                  <option value="" disabled selected>Sélectionner une espèce</option>
+                  <option value="maïs">Maïs</option>
+                  <option value="blé">Blé</option>
+                  <option value="soja">Soja</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Origine géographique -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Origine géographique <span class="text-red-500">*</span>
+              </label>
+              <input type="text" formControlName="origineGeographique"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+              <span class="text-xs text-gray-500">Région ou pays d'origine de la semence</span>
+            </div>
+
+            <!-- Année de récolte -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Année de récolte <span class="text-red-500">*</span>
+              </label>
+              <input type="text" formControlName="anneeRecolte"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Caractéristiques -->
+        <div class="mb-6">
+          <h3 class="text-md font-medium mb-4">Caractéristiques</h3>
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Traitements appliqués -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Traitements appliqués
+              </label>
+              <input type="text" formControlName="traitementsAppliques"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+
+            <!-- Certifications -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Certifications
+              </label>
+              <input type="text" formControlName="certifications"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+
+            <!-- Durée de conservation -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Durée de conservation (mois) <span class="text-red-500">*</span>
+              </label>
+              <input type="number" formControlName="dureeConservation"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+
+            <!-- Qualité germinative -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Qualité germinative (%) <span class="text-red-500">*</span>
+              </label>
+              <input type="number" formControlName="qualiteGerminative"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Données de production -->
+        <div class="mb-6">
+          <h3 class="text-md font-medium mb-4">Données de production</h3>
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Parcelle de production -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Parcelle de production <span class="text-red-500">*</span>
+              </label>
+              <input type="text" formControlName="parcelleProduction"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+              <span class="text-xs text-gray-500">Identifiant ou nom de la parcelle</span>
+            </div>
+
+            <!-- Quantité produite -->
+            <div class="mb-4">
+              <label class="block text-sm mb-1">
+                Quantité produite (kg) <span class="text-red-500">*</span>
+              </label>
+              <input type="number" formControlName="quantiteProduite"
+                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500">
+            </div>
+
+            <!-- Conditions de culture -->
+            <div class="mb-4 col-span-2">
+              <label class="block text-sm mb-1">
+                Conditions de culture
+              </label>
+              <textarea formControlName="conditionsCulture" rows="3"
+                       class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+            Soumettre
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,8 @@
 // seed-verification.component.ts
-import { NgClass, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface SeedInfo {
   variety: string;
@@ -30,6 +31,7 @@ export class SeedVerificationComponent {
   searchQuery: string = '';
   isAuthentic: boolean = true;
   verificationPerformed: boolean = true;
+  connexionpage=inject(Router)
 
   seedInfo: SeedInfo = {
     variety: 'Maïs hybride ZM253',
@@ -50,6 +52,7 @@ export class SeedVerificationComponent {
 
   scanQRCode(): void {
     console.log('Scanning QR Code...');
+    this.connexionpage.navigateByUrl('scan');
     // Logique pour scanner un code QR
   }
 
@@ -71,10 +74,12 @@ export class SeedVerificationComponent {
 
   clearSearch(): void {
     this.searchQuery = '';
+
   }
 
   logout(): void {
     console.log('Logging out...');
+    this.connexionpage.navigateByUrl('connexion')
     // Logique de déconnexion
   }
 }
