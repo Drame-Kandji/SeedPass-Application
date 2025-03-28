@@ -50,7 +50,7 @@ Route::prefix('ressource')->group(function () {
 
     // Afficher un lot spécifique (accessible aux utilisateurs authentifiés)
     Route::get('lot-de-semence/{id}', [SeedLotController::class, 'show']);
-        -//>middleware('auth:productor');
+        //->middleware('auth:productor');
 
     // Mettre à jour un lot (réservé aux admins)
     Route::put('lot-de-semence/{id}', [SeedLotController::class, 'update']);
