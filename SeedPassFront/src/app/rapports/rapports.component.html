@@ -1,0 +1,53 @@
+<div class="rapports-container">
+    <h2>Rapports</h2>
+  
+    <!-- Rapport des Certifications par Région -->
+    <section class="rapport-section">
+      <h3>Certifications par Région</h3>
+      <div class="chart-container">
+        <canvas id="certificationsChart"></canvas>
+      </div>
+    </section>
+  
+    <!-- Rapport des Alertes par Producteur -->
+    <section class="rapport-section">
+      <h3>Alertes par Producteur</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Producteur</th>
+            <th>Nombre d'Alertes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alerte of alertesParProducteur">
+            <td>{{ alerte.producteur }}</td>
+            <td>{{ alerte.nombreAlertes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- Rapport des Semences Non Certifiées -->
+    <section class="rapport-section">
+      <h3>Semences Non Certifiées</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Variété</th>
+            <th>Quantité</th>
+            <th>Producteur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let semence of semencesNonCertifiees">
+            <td>{{ semence.id }}</td>
+            <td>{{ semence.variete }}</td>
+            <td>{{ semence.quantite }}</td>
+            <td>{{ semence.producteur }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>

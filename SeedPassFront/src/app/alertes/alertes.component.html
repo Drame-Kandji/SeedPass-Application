@@ -1,0 +1,28 @@
+<div class="alertes-container">
+    <h2>Alertes</h2>
+  
+    <!-- Tableau des alertes -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nom du Producteur</th>
+          <th>ID de la Semence</th>
+          <th>Variété de la Semence</th>
+          <th>Message d'Alerte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alerte of alertes">
+          <td>{{ alerte.nomProducteur }}</td>
+          <td>{{ alerte.idSemence }}</td>
+          <td>{{ alerte.varieteSemence }}</td>
+          <td>
+            <span class="alerte-message">
+              <span class="emoji">⚠️</span>
+              Ce lot de semence produit par <strong>{{ alerte.nomProducteur }}</strong> n'est pas certifié.
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
