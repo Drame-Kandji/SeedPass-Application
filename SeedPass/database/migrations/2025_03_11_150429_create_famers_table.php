@@ -26,7 +26,7 @@ return new class extends Migration
             $table->boolean('isAcceptedBiometric');
             $table->timestamps();
         });
-        
+
     }
 
     /**

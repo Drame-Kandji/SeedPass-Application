@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FamerController;
@@ -16,25 +17,27 @@ Route::get('/user', function (Request $request) {
 
 
 Route::prefix('ressource')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::get('/me', [AuthController::class, 'me'])->middleware('auth:api');
+
+});
+
+Route::prefix('ressource')->group(function () {
     Route::apiResource('producteurs', ProductorController::class);
-//    Route::post('/producteur/login', [ProductorController::class, 'login']);
-    Route::post('/producteur/logout', [ProductorController::class, 'logout']);
+
 });
 
 
 Route::prefix('ressource')->group(function () {
-    Route::apiResource('agriculteurs/', FamerController::class);
-    Route::post('agriculteur/login',[FamerController::class,'login']);
-    Route::delete('agriculteur/logout',[FamerController::class,'logout']);
-    Route::post('agriculteur/scan-lot-de-semence', [FamerController::class, 'scan_seedLot']);
+    Route::apiResource('agriculteurs', FamerController::class);
 
 });
 
 
 Route::prefix('ressource')->group(function () {
     Route::apiResource('distributeurs', DistributorController::class);
-    Route::post('distributeur/login',[DistributorController::class,'login']);
-    Route::post('distributeur/logout',[DistributorController::class,'logout']);
+
 });
 
 
@@ -67,8 +70,7 @@ Route::prefix('ressource')->group(function () {
 
 Route::prefix('ressource')->group(function () {
     Route::apiResource('organisme-de-certification', CertificationBodyController::class);
-    Route::post('organisme-de-certification/login',[CertificationBodyController::class,'login']);
-    Route::post('organisme-de-certification/logout',[CertificationBodyController::class,'logout']);
+
 });
 
 

@@ -29,6 +29,7 @@ class ProductorRequest extends FormRequest
             'cni' => 'required|integer',
             'email' => 'required|email|unique:productors',
             'organisation' => 'required|string',
+            'profile'=>'required|string',
             'address' => 'required|string',
             'phone' => 'required|integer',
             'identificationNumber' => 'required|string',
