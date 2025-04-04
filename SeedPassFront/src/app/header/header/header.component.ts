@@ -36,4 +36,8 @@ export class HeaderComponent implements OnInit {
     { label: 'Services', link: '/services' },
     { label: 'Contact', link: '/contact' }
   ];
+
+  logout(){
+    this.profileService.profile.set('')
+  }
 }

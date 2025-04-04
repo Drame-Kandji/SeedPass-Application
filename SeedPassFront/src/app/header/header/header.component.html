@@ -11,16 +11,23 @@
              [routerLink]="item.link"
              class="text-white hover:text-green-100">
             {{ item.label }}
-          </a>
-          <a [routerLink]="route" routerLinkActive="router-link-active"
-             class="ml-2 bg-white text-green-500 hover:bg-green-100 px-4 py-1 rounded-full text-sm font-medium">
+        </a>
             @if (profile()) {
-              Deconnexion
+
+              <a routerLink="/" routerLinkActive="router-link-active"
+              (click)="logout()"
+             class="ml-2 bg-white text-green-500 hover:bg-green-100 px-4 py-1 rounded-full text-sm font-medium">
+             Deconnexion
+              </a>
             }
             @else {
-              Connexion
+
+              <a routerLink="/connexion" routerLinkActive="router-link-active"
+             class="ml-2 bg-white text-green-500 hover:bg-green-100 px-4 py-1 rounded-full text-sm font-medium">
+             Connexion
+              </a>
             }
-          </a>
+
         </nav>
         <!-- Mobile menu button would go here -->
       </div>
