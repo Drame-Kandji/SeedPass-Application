@@ -1,7 +1,8 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { routes } from '../../app.routes';
 import { RouterLink, RouterLinkActive} from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,24 @@ import { RouterLink, RouterLinkActive} from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  profile;
+  route:string='';
+  constructor(private profileService:ProfileService){
+    this.profile=computed(()=>{
+      return profileService.profile()
+    })
+  }
+
+  ngOnInit(): void {
+    if(this.profile())
+    {
+      this.route='/inscription'
+    }
+    else{
+      this.route='/connexion'
+    }
+  }
   title = 'SeedPass';
   subtitle = 'La traçabilité au service de l\'agriculture africaine';
   menuItems = [

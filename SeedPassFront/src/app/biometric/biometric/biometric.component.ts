@@ -1,6 +1,7 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 
 @Component({
@@ -19,8 +20,14 @@ scanningInProgress: any;
 homepage=inject(Router)
 @ViewChild('videoElement') videoElement!: ElementRef;
 stream!: MediaStream;
+profile;
 
-  constructor() { }
+  constructor(private profileService:ProfileService) {
+
+    this.profile=computed(()=>{
+      return this.profileService.profile()
+    })
+   }
 
   setActiveTab(tab: 'fingerprint' | 'facialRecognition') {
     this.activeTab = tab;
@@ -54,7 +61,19 @@ stream!: MediaStream;
   }
 
   continueProcess() {
-    this.homepage.navigateByUrl('Agricultor')
+    if(this.profile()=="Agriculteur"){
+      this.homepage.navigate(['/Agricultor']);
+    }
+    else if(this.profile()=="Producteur"){
+      this.homepage.navigate(['/productor']);
+    }
+    else if(this.profile()=="Distributeur"){
+      this.homepage.navigate(['/distributor']);
+    }
+    else
+    {
+       this.homepage.navigate(['/connexion']);
+    }
   }
 
 

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-hero-section',
@@ -8,5 +9,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './hero-section.component.css'
 })
 export class HeroSectionComponent {
-
+  profile;
+ constructor(private profileService:ProfileService){
+   this.profile=computed(()=>{
+    return this.profileService.profile()
+   })
+ }
 }

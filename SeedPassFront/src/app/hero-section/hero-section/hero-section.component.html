@@ -4,9 +4,10 @@
       <h2 class="text-3xl md:text-4xl font-bold mb-6">
         Garantir l'authenticité et la qualité des semences en Afrique
       </h2>
+      @if (!profile()) {
       <a routerLink="/inscription" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-8 py-3 rounded-md transition-colors">
         S'inscrire
-      </a>
+      </a>}
     </div>
   </div>
 </section>

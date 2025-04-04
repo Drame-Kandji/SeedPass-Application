@@ -69,7 +69,7 @@
         </div>
 
         <!-- Scanner QR -->
-        <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4">
+        <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4 w-60 m-auto">
           <zxing-scanner
             (scanSuccess)="handleScanSuccess($event)"
             [tryHarder]="true"

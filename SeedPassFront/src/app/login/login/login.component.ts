@@ -5,6 +5,7 @@ import { FamerService } from '../../services/famer.service';
 import { Sucess } from '../../interface/sucess';
 import { ProductorService } from '../../services/productor.service';
 import { DistributorService } from '../../services/distributor.service';
+import { ProfileService } from '../../services/profile.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginComponent {
   activeTab: string = 'connexion';
   home=inject(Router)
   profile!:string;
+  profileService=inject(ProfileService)
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -38,16 +40,20 @@ export class LoginComponent {
       console.log('Form submitted:', this.loginForm.value);
       this.loginF.login(this.loginForm.value).subscribe(
         (response:Sucess)=>{
-
+         console.log(response);
           this.profile=response.profile;
+          console.log(this.profile);
           if(this.profile=="Agriculteur"){
             this.home.navigate(['/Agricultor']);
+            this.profileService.profile.set(this.profile)
           }
           else if(this.profile=="Producteur"){
             this.home.navigate(['/productor']);
+            this.profileService.profile.set(this.profile)
           }
           else if(this.profile=="Distributeur"){
             this.home.navigate(['/distributor']);
+            this.profileService.profile.set(this.profile)
           }
           else
           {

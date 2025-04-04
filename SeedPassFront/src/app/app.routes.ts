@@ -10,7 +10,7 @@ import { StockManagementComponent } from './stock-management/stock-management/st
 import {ScanSemenceComponent} from './scan-semence/scan-semence/scan-semence.component';
 
 export const routes: Routes = [
- {path:'',component:SemenceRegistrationComponent},
+ {path:'',component:HomeComponent},
  {path:'connexion',component:PageConnexionComponent},
  {path:'inscription',component:InscriptionComponent},
  {path:'reconnaissanceFacial',component:BiometricComponent},

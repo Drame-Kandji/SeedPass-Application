@@ -6,6 +6,7 @@ import { UserInterface } from '../../interface/user-interface';
 import { FamerService } from '../../services/famer.service';
 import { ProductorService } from '../../services/productor.service';
 import { DistributorService } from '../../services/distributor.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-inscription',
@@ -21,7 +22,7 @@ export class InscriptionComponent {
   selectedProfile: string = 'Agriculteur';
   biometric_page=inject(Router)
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private profile:ProfileService) {
     this.signupForm = this.fb.group({
       // Informations personnelles
       firstName: ['', Validators.required],
@@ -77,6 +78,7 @@ export class InscriptionComponent {
               console.log(response);
             }
           )
+          this.profile.profile.set(this.selectedProfile)
       }
       else if(this.selectedProfile=='Producteur')
       {
@@ -90,6 +92,7 @@ export class InscriptionComponent {
             console.log(response);
           }
         )
+        this.profile.profile.set(this.selectedProfile)
       }
       else
       {
@@ -103,6 +106,7 @@ export class InscriptionComponent {
               console.log(response);
             }
           )
+          this.profile.profile.set(this.selectedProfile)
       }
       //console.log('Form submitted',user);
       this.biometric()
