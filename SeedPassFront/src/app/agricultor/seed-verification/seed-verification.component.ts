@@ -1,5 +1,5 @@
 // seed-verification.component.ts
-import { NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -52,6 +52,7 @@ export class SeedVerificationComponent {
 
   scanQRCode(): void {
     console.log('Scanning QR Code...');
+    this.connexionpage.navigateByUrl('scan');
     // Logique pour scanner un code QR
   }
 
@@ -73,6 +74,7 @@ export class SeedVerificationComponent {
 
   clearSearch(): void {
     this.searchQuery = '';
+
   }
 
   logout(): void {
