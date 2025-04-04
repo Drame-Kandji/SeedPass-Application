@@ -1,9 +1,5 @@
 <div class="autorite-controle-container">
-  <!-- Barre de recherche -->
-  <div class="search-bar">
-    <span class="logo">SeedPass</span>
-    <input type="text" placeholder="Rechercher...">
-  </div>
+
 
   <!-- Contenu principal -->
   <div class="main-content">
@@ -11,17 +7,17 @@
     <aside class="sidebar">
       <nav>
         <ul>
-          <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-          <li><a routerLink="/verifications" routerLinkActive="active">Vérifications</a></li>
-          <li><a routerLink="/alertes" routerLinkActive="active">Alertes</a></li>
-          <li><a routerLink="/rapports" routerLinkActive="active">Rapports</a></li>
+          <li><a routerLink="/dashboardControle">Dashboard</a></li>
+          <li><a routerLink="/verifications">Vérifications</a></li>
+          <li><a routerLink="/alertes">Alertes</a></li>
+          <li><a routerLink="/rapports">Rapports</a></li>
         </ul>
       </nav>
     </aside>
 
     <!-- Contenu dynamique -->
     <div class="content">
-      <router-outlet></router-outlet>
+      <app-dashboardcontrole/>
     </div>
   </div>
 </div>

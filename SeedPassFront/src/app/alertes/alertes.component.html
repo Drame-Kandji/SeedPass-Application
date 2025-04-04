@@ -1,28 +1,45 @@
-<div class="alertes-container">
-    <h2>Alertes</h2>
-  
-    <!-- Tableau des alertes -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nom du Producteur</th>
-          <th>ID de la Semence</th>
-          <th>Variété de la Semence</th>
-          <th>Message d'Alerte</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let alerte of alertes">
-          <td>{{ alerte.nomProducteur }}</td>
-          <td>{{ alerte.idSemence }}</td>
-          <td>{{ alerte.varieteSemence }}</td>
-          <td>
-            <span class="alerte-message">
-              <span class="emoji">⚠️</span>
-              Ce lot de semence produit par <strong>{{ alerte.nomProducteur }}</strong> n'est pas certifié.
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="autorite-controle-container">
+
+  <!-- Contenu principal -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a routerLink="/dashboardControle">Dashboard</a></li>
+          <li><a routerLink="/verifications">Vérifications</a></li>
+          <li><a routerLink="/alertes">Alertes</a></li>
+          <li><a routerLink="/rapports">Rapports</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Contenu dynamique -->
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom du Producteur</th>
+            <th>ID de la Semence</th>
+            <th>Variété de la Semence</th>
+            <th>Message d'Alerte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alerte of alertes">
+            <td>{{ alerte.nomProducteur }}</td>
+            <td>{{ alerte.idSemence }}</td>
+            <td>{{ alerte.varieteSemence }}</td>
+            <td>
+              <span class="alerte-message">
+                <span class="emoji">⚠️</span>
+                Ce lot de semence produit par <strong>{{ alerte.nomProducteur }}</strong> n'est pas certifié.
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
+

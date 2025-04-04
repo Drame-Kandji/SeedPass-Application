@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importez FormsModule
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-verifications',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Ajoutez FormsModule ici
+  imports: [CommonModule, RouterLink,FormsModule], // Ajoutez FormsModule ici
   templateUrl: './verifications.component.html',
   styleUrls: ['./verifications.component.css']
 })

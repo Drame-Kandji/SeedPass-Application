@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-rapports',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './rapports.component.html',
   styleUrls: ['./rapports.component.css']
 })

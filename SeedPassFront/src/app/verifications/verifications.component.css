@@ -5,34 +5,34 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+
   .verifications-container h2 {
     font-size: 1.5em;
     color: #2c3e50;
     margin-bottom: 20px;
   }
-  
+
   .semence-form {
     margin-bottom: 20px;
   }
-  
+
   .form-group {
     margin-bottom: 10px;
   }
-  
+
   .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
-  
+
   .form-group input, .form-group select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
-  
+
   button {
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -41,30 +41,96 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   button:hover {
     background-color: #45a049;
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   th, td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
   }
-  
+
   th {
     background-color: #f9f9f9;
   }
-  
+
   .certifie {
     color: #4CAF50; /* Couleur verte pour "Certifié" */
   }
-  
+
   .non-certifie {
     color: #f44336; /* Couleur rouge pour "Non certifié" */
+  }
+
+  .autorite-controle-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+  .search-bar {
+    background-color: #4CAF50; /* Fond vert pour la barre de recherche */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-bar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white; /* Texte blanc pour "SeedPass" */
+  }
+
+  .search-bar input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+  }
+
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+
+  .sidebar {
+    width: 250px;
+    background-color: #2c3e50; /* Couleur de fond de la sidebar */
+    color: white;
+    padding: 20px;
+  }
+
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .sidebar nav ul li {
+    margin-bottom: 10px;
+  }
+
+  .sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+  }
+
+  .sidebar nav ul li a.active {
+    font-weight: bold;
+    color: #4CAF50; /* Couleur du lien actif */
+  }
+
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9; /* Couleur de fond du contenu principal */
   }
