@@ -27,6 +27,7 @@ class UpdateDistributorRequest extends FormRequest
             'cni' => 'required|integer',
             'email' => 'required|email',
             'organisation' => 'string',
+            'profile'=>'required|string',
             'address' => 'required|string',
             'phone' => 'required|integer',
             'identificationNumber' => 'string',
