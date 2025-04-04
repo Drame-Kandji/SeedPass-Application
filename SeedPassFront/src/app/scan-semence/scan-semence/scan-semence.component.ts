@@ -3,6 +3,7 @@ import {CommonModule, NgIf} from "@angular/common";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import {VerifiableCredentialService} from '../../services/verifiable-credential.service';
 import {HttpClient} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import jsQR from 'jsqr';
 import { RouterLink } from '@angular/router';
 
