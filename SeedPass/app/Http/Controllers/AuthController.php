@@ -34,9 +34,9 @@ class AuthController extends Controller
 
         // Vérifier quel guard utiliser en fonction du profil
         $guard = match ($user->profile) {
-            'agriculteur' => 'famers',
-            'distributeur' => 'distributors',
-            'producteur' => 'productors',
+            'Agriculteur' => 'famers',
+            'Distributeur' => 'distributors',
+            'Producteur' => 'productors',
             'organisme' => 'certification_bodies',
             default => 'api'
         };

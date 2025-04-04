@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('location');
             $table->string('identificationNumber');
-            $table->string('emailAddress');
+            $table->string('email');
             $table->string('phoneNumber');
             $table->string('password')->nullable();
             $table->timestamps();

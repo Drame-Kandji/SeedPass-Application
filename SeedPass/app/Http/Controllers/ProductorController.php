@@ -24,7 +24,7 @@ class ProductorController extends Controller
                 'data'=>$productors
             ]);
         }catch(Exception $e){
-            return response()->json($e);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ class ProductorController extends Controller
                 'data'=>$productor
             ]);
         }catch(Exception $e){
-            return response()->json($e);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -61,7 +61,7 @@ class ProductorController extends Controller
 
             ]);
         }catch(Exception $e){
-            return response()->json($e);
+            return response()->json($e->getMessage());
        }
     }
 
@@ -84,7 +84,7 @@ class ProductorController extends Controller
                 'data'=>$productor
             ]);
         }catch(Exception $e){
-            return response()->json($e);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ class ProductorController extends Controller
                 'message'=>'Producteur supprimé avec success'
             ]);
        }catch(Exception $e){
-           return response()->json($e);
+           return response()->json($e->getMessage());
        }
     }
 

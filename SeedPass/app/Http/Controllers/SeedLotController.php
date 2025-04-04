@@ -6,11 +6,14 @@ use App\Models\SeedLot;
 use App\Http\Requests\StoreSeedLotRequest;
 use App\Http\Requests\UpdateSeedLotRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SeedLotController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      */
     public function index()
     {
@@ -108,6 +111,50 @@ class SeedLotController extends Controller
 
             // Mettre à jour la certification
             $seedLot->update(['isCertified' => true]);
+
+            // Créer les données du QR Code
+            $qrCodeData = "*Semence certifiée :*\n" .
+            "Variété : " . $seedLot->variety . "\n" .
+            "Numéro de lot : " . $seedLot->lot_number . "\n" .
+            "Zone Geographique:"  . $seedLot->geographicOrigin . "\n" .
+            "Annee de production : " . $seedLot->yearOfHarvest . "\n" .
+            "Traitement:" . $seedLot->processing . "\n" .
+            "Condition de croissance : " . $seedLot->growingConditions . "\n\n" .
+
+            "*Production:*\n" .
+            "Producteur : " . $seedLot->productor->firstName . " " . $seedLot->productor->lastName . "\n" .
+            "Email : " . $seedLot->productor->email . "\n" .
+            "Adresse : " . $seedLot->productor->address . "\n" .
+            "Organisation : " . $seedLot->productor->organisation . "\n" .
+            "Identification : " . $seedLot->productor->identificationNumber . "\n" .
+            "Téléphone : " . $seedLot->productor->phone . "\n\n" .
+
+            "*Certification :*\n" .
+            "Oganisme de certification : " . $seedLot->certification_body->name . "\n" .
+            "Date de certification : " . now()->format('Y-m-d') . "\n" .
+            "Numéro d'identification  : " . $seedLot->certification_body->identificationNumber . "\n\n" .
+            "Adresse :" . $seedLot->certification_body->location . "\n".
+            "Email :" . $seedLot->certification_body->emailAddress . "\n" .
+            "Téléphone :" . $seedLot->certification_body->phoneNumber . "\n";
+
+            // Vérifier si l'utilisateur est un organisme de certification
+            if (auth()->guard('certification_body')->check()) {
+                return response()->json(['error' => 'Accès non autorisé'], 403);
+            }
+
+
+            //si le QrCode vous renvoie une erreur, veuillez installer le package simple-qrcode
+            // avec la commmande: composer require simplesoftwareio/simple-qrcode
+            // Générer le QR Code avec les données du lot
+            $qrCodeImage = QrCode::format('svg')->size(200)->generate($qrCodeData);
+            //dd($qrCodeImage);
+
+            // Sauvegarder le QR code dans le stockage
+            $qrCodePath = "qrcodes/lot_{$seedLot->lot_number}.svg";
+            Storage::disk('public')->put($qrCodePath, $qrCodeImage);
+
+            // Mettre à jour le chemin du QR code dans la base de données
+            $seedLot->update(['qr_code' => $qrCodePath]);
 
             return response()->json([
                 'message' => 'Lot de semence certifié avec succès',
