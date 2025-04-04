@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\SeedLotController;
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Http\Request;
 use App\Http\Controllers\FamerController;
-use App\Http\Controllers\SeedLotController;
 use App\Http\Controllers\ProductorController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\CertificationBodyController;
