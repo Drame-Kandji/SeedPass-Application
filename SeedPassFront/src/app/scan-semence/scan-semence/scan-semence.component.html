@@ -1,145 +1,187 @@
 <!-- seed-verification.component.html -->
-<div class="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-  <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
-    <div class="bg-green-600 p-4 text-white">
-      <h2 class="text-xl font-bold">Vérification d'authenticité des semences</h2>
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <div class="w-48 bg-gray-800 text-white flex flex-col">
+    <!-- Logo -->
+    <div class="bg-green-500 p-4">
+      <h1 class="text-2xl font-bold">SeedPass</h1>
     </div>
 
-    <div class="p-6">
-      <!-- Options de scan -->
-      <div *ngIf="!scanResult && !isLoading" class="flex flex-col items-center space-y-6">
-        <div class="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <button class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center" (click)="enableScanner()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Scanner un QR code
+    <!-- Menu Items -->
+    <div class="flex-grow p-4 flex flex-col">
+      <a [routerLink]="['/Agricultor']" routerLinkActive="router-link-active"  class= "block bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-8">
+        Tableau de bord
+      </a>
+
+      <!-- Menu links -->
+      <div class="flex items-center text-white mb-4">
+        <div class="w-4 h-4 rounded-full bg-white mr-2"></div>
+        <span>Scan de code QR</span>
+      </div>
+
+      <div class="flex items-center mb-8">
+        <div class="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+        <span>Mon Profile</span>
+      </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="p-4">
+      <button
+        class="w-full text-left text-white hover:text-gray-300 transition duration-200"
+        >
+        Déconnexion
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex justify items-center min-h-screen bg-gray-100 p-4  ms-60">
+    <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="bg-green-600 p-4 text-white">
+        <h2 class="text-xl font-bold">Vérification d'authenticité des semences</h2>
+      </div>
+
+      <div class="p-6">
+        <!-- Options de scan -->
+        <div *ngIf="!scanResult && !isLoading" class="flex flex-col items-center space-y-6 mb-4">
+          <div class="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <button class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center" (click)="enableScanner()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Scanner un QR code
+            </button>
+
+            <div class="flex items-center justify-center">
+              <span class="px-4 text-gray-500 font-medium">OU</span>
+            </div>
+
+            <label class="w-full sm:w-auto px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition cursor-pointer flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              Télécharger un QR code
+              <input type="file" (change)="handleFileUpload($event)" accept="image/*" class="hidden">
+            </label>
+          </div>
+        </div>
+
+        <!-- Scanner QR -->
+        <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4 w-60 m-auto">
+          <zxing-scanner
+            (scanSuccess)="handleScanSuccess($event)"
+            [tryHarder]="true"
+            class="w-full">
+          </zxing-scanner>
+          <button class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" (click)="disableScanner()">Annuler</button>
+        </div>
+
+        <!-- Chargement -->
+        <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-8 space-y-4">
+          <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-gray-700">Vérification en cours...</p>
+        </div>
+
+        <!-- Erreur -->
+        <div *ngIf="errorMessage" class="flex flex-col items-center space-y-4">
+          <div class="w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            {{ errorMessage }}
+          </div>
+          <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" (click)="enableScanner()">Réessayer</button>
+        </div>
+
+        <!-- Résultat de la vérification -->
+        <div *ngIf="verificationResult && !isLoading" class="flex flex-col items-center space-y-6">
+          <div [ngClass]="{'p-4 text-center rounded-lg w-full font-bold': true,
+                          'bg-green-100 text-green-800': getVerificationStatus() === verificationStatus.VALID,
+                          'bg-yellow-100 text-yellow-800': getVerificationStatus() === verificationStatus.EXPIRED,
+                          'bg-red-100 text-red-800': getVerificationStatus() === verificationStatus.INVALID,
+                          'bg-gray-100 text-gray-800': getVerificationStatus() === verificationStatus.UNKNOWN}">
+            <span *ngIf="getVerificationStatus() === verificationStatus.VALID" class="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Semence authentique
+            </span>
+            <span *ngIf="getVerificationStatus() === verificationStatus.EXPIRED" class="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              Certification expirée
+            </span>
+            <span *ngIf="getVerificationStatus() === verificationStatus.INVALID" class="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Semence non authentique
+            </span>
+            <span *ngIf="getVerificationStatus() === verificationStatus.UNKNOWN" class="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Statut inconnu
+            </span>
+          </div>
+
+          <!-- Détails de la semence -->
+          <div *ngIf="scanResult && scanResult.credentialSubject" class="w-full">
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Informations sur la semence</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Numéro de lot:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.lotNumber }}</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Variété:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.variety }}</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Origine géographique:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.geographicOrigin }}</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Année de récolte:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.yearOfHarvest }}</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Qualité de germination:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.germinationQuality }}%</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Certification:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.certification }}</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Producteur:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.producer.name }} ({{ scanResult.credentialSubject.producer.organisation }})</span>
+              </div>
+
+              <div class="p-3 bg-gray-50 rounded">
+                <span class="font-medium text-gray-700">Parcelle de production:</span>
+                <span class="ml-2">{{ scanResult.credentialSubject.productionSplot }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bouton pour vérifier une autre semence -->
+          <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition mt-6" (click)="enableScanner()">
+            Vérifier une autre semence
           </button>
-
-          <div class="flex items-center justify-center">
-            <span class="px-4 text-gray-500 font-medium">OU</span>
-          </div>
-
-          <label class="w-full sm:w-auto px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition cursor-pointer flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            Télécharger un QR code
-            <input type="file" (change)="handleFileUpload($event)" accept="image/*" class="hidden">
-          </label>
         </div>
-      </div>
-
-      <!-- Scanner QR -->
-      <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4">
-        <zxing-scanner
-          (scanSuccess)="handleScanSuccess($event)"
-          [tryHarder]="true"
-          class="w-full">
-        </zxing-scanner>
-        <button class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" (click)="disableScanner()">Annuler</button>
-      </div>
-
-      <!-- Chargement -->
-      <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-8 space-y-4">
-        <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-        <p class="text-gray-700">Vérification en cours...</p>
-      </div>
-
-      <!-- Erreur -->
-      <div *ngIf="errorMessage" class="flex flex-col items-center space-y-4">
-        <div class="w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-          {{ errorMessage }}
-        </div>
-        <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" (click)="enableScanner()">Réessayer</button>
-      </div>
-
-      <!-- Résultat de la vérification -->
-      <div *ngIf="verificationResult && !isLoading" class="flex flex-col items-center space-y-6">
-        <div [ngClass]="{'p-4 text-center rounded-lg w-full font-bold': true,
-                        'bg-green-100 text-green-800': getVerificationStatus() === verificationStatus.VALID,
-                        'bg-yellow-100 text-yellow-800': getVerificationStatus() === verificationStatus.EXPIRED,
-                        'bg-red-100 text-red-800': getVerificationStatus() === verificationStatus.INVALID,
-                        'bg-gray-100 text-gray-800': getVerificationStatus() === verificationStatus.UNKNOWN}">
-          <span *ngIf="getVerificationStatus() === verificationStatus.VALID" class="flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Semence authentique
-          </span>
-          <span *ngIf="getVerificationStatus() === verificationStatus.EXPIRED" class="flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            Certification expirée
-          </span>
-          <span *ngIf="getVerificationStatus() === verificationStatus.INVALID" class="flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Semence non authentique
-          </span>
-          <span *ngIf="getVerificationStatus() === verificationStatus.UNKNOWN" class="flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Statut inconnu
-          </span>
-        </div>
-
-        <!-- Détails de la semence -->
-        <div *ngIf="scanResult && scanResult.credentialSubject" class="w-full">
-          <h3 class="text-lg font-semibold mb-4 text-gray-800">Informations sur la semence</h3>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Numéro de lot:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.lotNumber }}</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Variété:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.variety }}</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Origine géographique:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.geographicOrigin }}</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Année de récolte:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.yearOfHarvest }}</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Qualité de germination:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.germinationQuality }}%</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Certification:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.certification }}</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Producteur:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.producer.name }} ({{ scanResult.credentialSubject.producer.organisation }})</span>
-            </div>
-
-            <div class="p-3 bg-gray-50 rounded">
-              <span class="font-medium text-gray-700">Parcelle de production:</span>
-              <span class="ml-2">{{ scanResult.credentialSubject.productionSplot }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bouton pour vérifier une autre semence -->
-        <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition mt-6" (click)="enableScanner()">
-          Vérifier une autre semence
-        </button>
+        {{scanResult}}
       </div>
     </div>
   </div>
+
 </div>
+
+<!-- seed-verification.component.html -->

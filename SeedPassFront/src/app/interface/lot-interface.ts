@@ -1,5 +1,4 @@
 export interface SeedLot {
-
     reference: string;
     variete: string;
     quantite: string;

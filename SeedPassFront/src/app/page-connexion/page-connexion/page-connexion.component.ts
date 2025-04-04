@@ -5,7 +5,7 @@ import { HeaderComponent } from "../../header/header/header.component";
 
 @Component({
   selector: 'app-page-connexion',
-  imports: [LoginComponent, FeaturesComponent, HeaderComponent],
+  imports: [LoginComponent],
   templateUrl: './page-connexion.component.html',
   styleUrl: './page-connexion.component.css'
 })

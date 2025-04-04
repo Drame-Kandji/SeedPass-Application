@@ -30,10 +30,10 @@ export class InscriptionComponent {
       email: ['', [Validators.required, Validators.email]],
 
       // Informations professionnelles
-      organisation: ['',[Validators.required, Validators.email]],
-      address: ['',[Validators.required, Validators.email]],
-      phone: ['',[Validators.required, Validators.email]],
-      identificationNumber: ['',[Validators.required, Validators.email]],
+      organisation: [''],
+      address: [''],
+      phone: [''],
+      identificationNumber: [''],
 
       // Sécurité
       password: ['', Validators.required],
@@ -41,7 +41,7 @@ export class InscriptionComponent {
 
       // Conditions
       isAcceptedCondition: [false, Validators.requiredTrue],
-      isAcceptedBiometric: [false,Validators.requiredTrue]
+      isAcceptedBiometric: [false]
     });
   }
 
@@ -78,7 +78,7 @@ export class InscriptionComponent {
             }
           )
       }
-      if(this.selectedProfile=='Producteur')
+      else if(this.selectedProfile=='Producteur')
       {
         user=this.signupForm.value
         user['profile']=this.selectedProfile

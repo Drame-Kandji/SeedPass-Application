@@ -4,15 +4,12 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import {VerifiableCredentialService} from '../../services/verifiable-credential.service';
 import {HttpClient} from '@angular/common/http';
 import jsQR from 'jsqr';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-scan-semence',
   standalone:true,
-    imports: [
-        NgIf,
-        ZXingScannerModule,
-      CommonModule,  // Remplace BrowserModule si ce n'est pas le module racin
-    ],
+    imports: [RouterLink,NgIf,ZXingScannerModule,CommonModule],  // Remplace BrowserModule si ce n'est pas le module racin],
   templateUrl: './scan-semence.component.html',
   styleUrl: './scan-semence.component.css'
 })
@@ -106,6 +103,7 @@ export class ScanSemenceComponent {
     } catch (error) {
       this.errorMessage = 'Format de QR code invalide';
       this.isLoading = false;
+      console.log(this.scanResult);
     }
   }
 
