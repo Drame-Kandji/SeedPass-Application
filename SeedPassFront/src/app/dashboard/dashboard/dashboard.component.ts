@@ -1,12 +1,11 @@
 
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone:true,
-  imports: [CommonModule,RouterLink],
+  imports: [NgClass,NgFor],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

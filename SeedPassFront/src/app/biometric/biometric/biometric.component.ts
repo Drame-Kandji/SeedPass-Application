@@ -54,7 +54,7 @@ stream!: MediaStream;
   }
 
   continueProcess() {
-    this.homepage.navigate(['/productor'])
+    this.homepage.navigateByUrl('Agricultor')
   }
 
 

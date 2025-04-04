@@ -44,7 +44,7 @@
 
       <div class="p-6">
         <!-- Options de scan -->
-        <div *ngIf="!scanResult && !isLoading" class="flex flex-col items-center space-y-6 mb-4">
+        <div *ngIf="!scanResult && !isLoading" class="flex flex-col items-center space-y-6">
           <div class="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <button class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center" (click)="enableScanner()">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,7 +69,7 @@
         </div>
 
         <!-- Scanner QR -->
-        <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4 w-60 m-auto">
+        <div *ngIf="scannerEnabled" class="flex flex-col items-center space-y-4">
           <zxing-scanner
             (scanSuccess)="handleScanSuccess($event)"
             [tryHarder]="true"

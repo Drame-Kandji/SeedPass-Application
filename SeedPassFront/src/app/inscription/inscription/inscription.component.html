@@ -45,6 +45,14 @@
         >
           Distributeur
         </button>
+        <button
+          class="px-4 py-2 rounded-md border text-sm"
+          [ngClass]="{'bg-green-500 text-white border-green-500': selectedProfile === 'Organisme',
+                      'bg-white text-gray-700 border-gray-300': selectedProfile !== 'Organisme'}"
+          (click)="setProfile('Organisme')"
+        >
+          Organisme de Certification
+        </button>
       </div>
     </div>
 
