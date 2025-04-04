@@ -11,7 +11,7 @@ import { Sucess } from '../interface/sucess';
 export class FamerService {
   http=inject(HttpClient)
   url = 'http://localhost:8000/api/ressource/agriculteurs';
-  url_login='http://127.0.0.1:8000/api/ressource/agriculteur/login'
+  url_login='http://127.0.0.1:8000/api/ressource/login'
   constructor() {
 
    }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-semence-registration',
@@ -14,7 +15,7 @@ export class SemenceRegistrationComponent {
   userName = 'Ibrahima Producteur';
   currentDate = 'Samedi 8 mars 2025';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private route:Router) {
     this.seedForm = this.fb.group({
       variete: ['', Validators.required],
       espece: ['', Validators.required],
@@ -36,7 +37,8 @@ export class SemenceRegistrationComponent {
   onSubmit(): void {
     if (this.seedForm.valid) {
       console.log('Données du formulaire soumises:', this.seedForm.value);
-      // Logique pour envoyer les données au service
+      this.route.navigate(['stock/management'])
+      //this.seedForm.reset
     } else {
       // Marquer tous les champs comme touchés pour afficher les erreurs
       Object.keys(this.seedForm.controls).forEach(key => {
