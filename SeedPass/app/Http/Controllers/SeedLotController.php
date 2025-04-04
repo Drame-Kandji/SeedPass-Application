@@ -137,6 +137,10 @@ class SeedLotController extends Controller
             "Email :" . $seedLot->certification_body->emailAddress . "\n" .
             "Téléphone :" . $seedLot->certification_body->phoneNumber . "\n";
 
+            // Vérifier si l'utilisateur est un organisme de certification
+            if (auth()->guard('certification_body')->check()) {
+                return response()->json(['error' => 'Accès non autorisé'], 403);
+            }
 
 
             //si le QrCode vous renvoie une erreur, veuillez installer le package simple-qrcode
