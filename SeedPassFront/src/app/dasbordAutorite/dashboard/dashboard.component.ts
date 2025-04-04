@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-dashboardcontrole',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

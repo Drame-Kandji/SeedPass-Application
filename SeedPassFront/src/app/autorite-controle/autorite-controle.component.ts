@@ -7,7 +7,7 @@ import { DashboardComponentControle } from "../dasbordAutorite/dashboard/dashboa
 @Component({
   selector: 'app-autorite-controle',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet,DashboardComponentControle], // Importez RouterModule
+  imports: [CommonModule, RouterLink,DashboardComponentControle], // Importez RouterModule
   templateUrl: './autorite-controle.component.html',
   styleUrls: ['./autorite-controle.component.css']
 })

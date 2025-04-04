@@ -15,7 +15,7 @@ import { AlertesComponent } from './alertes/alertes.component';
 import { RapportsComponent } from './rapports/rapports.component';
 
 export const routes: Routes = [
- {path:'',component:AutoriteControleComponent},
+ {path:'',component:HomeComponent},
  {path:'connexion',component:PageConnexionComponent},
  {path:'inscription',component:InscriptionComponent},
  {path:'reconnaissanceFacial',component:BiometricComponent},
