@@ -101,13 +101,12 @@ ng serve
 
 *SeneTriDevs Solution*
 
-- Aliou Dramé (Université Iba Der Thiam de Thiès) - aliou.drame@univ-thies.sn
-- Ndongo Mbath (Université Iba Der Thiam de Thiès) - ndongo.mbath@univ-thies.sn
-- Ibrahima Kébé (Université Iba Der Thiam de Thiès) - ibrahima.kebe@univ-thies.sn
-- Atta Fall (Université Iba Der Thiam de Thiès) - atta.fall@univ-thies.sn
-- Parrain : Dr. Mansour Diouf (Université Iba Der Thiam de Thiès) - mansour.diouf03@univ-thies.sn
+- Aliou Dramé (Université Iba Der Thiam de Thiès) - dramealiou13460@gmail.com
+- Ndongo Mbath (Université Iba Der Thiam de Thiès) - ndongombathie70@gmail.com
+- Ibrahima Kébé (Université Iba Der Thiam de Thiès) - ibrahimakebe635@gmail.com
+- Atta Fall (Université Iba Der Thiam de Thiès) - fallatta13@gmail.com
 
 
 ## *Contact*
 
-Pour toute question, contactez-nous à : aliou.drame@univ-thies.sn
+Pour toute question, contactez-nous à : dramealiou13460@gmail.com
